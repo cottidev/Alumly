@@ -10,38 +10,120 @@
       rel="stylesheet"
     />
     <style>
-      /* ═══════════════════════════════════════════════
-   DESIGN TOKENS
-═══════════════════════════════════════════════ */
+      /* ═══════════════════════════════════════════════════════════════
+   ALUMLY — Inline Styles
+   Professional Slate/Charcoal design system
+   Dark mode default · Light mode via [data-theme="light"]
+═══════════════════════════════════════════════════════════════ */
+
+      /* ──────────────────────────────────────────────────────────────
+   DESIGN TOKENS — Dark (default)
+────────────────────────────────────────────────────────────── */
       :root {
-        --bg: #0d0d12;
-        --surface: #14141c;
-        --surface2: #1c1c28;
-        --surface3: #232333;
+        --bg: #0f0f14;
+        --bg-elevated: #16161e;
+        --bg-card: #1a1a24;
+        --bg-input: #12121a;
+        --bg-hover: #1e1e2a;
         --border: rgba(255, 255, 255, 0.07);
-        --border2: rgba(255, 255, 255, 0.12);
-        --text: #f0eff5;
-        --muted: #6b6a7e;
-        --accent: #c8f564;
-        --accent2: #7b6ef6;
-        --accent3: #f56464;
-        --accent4: #64d6f5;
-        --danger: #f56464;
-        --r: 14px;
+        --border-med: rgba(255, 255, 255, 0.11);
+        --border-hi: rgba(255, 255, 255, 0.18);
+        --text: #eeedf5;
+        --text-2: #9896b0;
+        --text-3: #5a5870;
+        --accent: #b8f04a;
+        --accent-dim: rgba(184, 240, 74, 0.12);
+        --accent-glow: rgba(184, 240, 74, 0.2);
+        --accent-dark: #96cc35;
+        --red: #f26c6c;
+        --red-dim: rgba(242, 108, 108, 0.12);
+        --blue: #5ea0f0;
+        --blue-dim: rgba(94, 160, 240, 0.12);
+        --purple: #8b7cf8;
+        --purple-dim: rgba(139, 124, 248, 0.12);
+        --teal: #4ecdc4;
+        --teal-dim: rgba(78, 205, 196, 0.12);
+        --yellow: #f5c842;
+        --yellow-dim: rgba(245, 200, 66, 0.12);
+        --pink: #f06aaa;
+        --pink-dim: rgba(240, 106, 170, 0.12);
+        --green: #52e089;
+        --green-dim: rgba(82, 224, 137, 0.12);
+        --surface-glass: rgba(22, 22, 30, 0.85);
+        --r: 12px;
         --r-sm: 8px;
-        --sidebar-w: 240px;
-        --topbar-h: 58px;
+        --r-xs: 5px;
+        --shadow-sm:
+          0 1px 4px rgba(0, 0, 0, 0.3), 0 2px 12px rgba(0, 0, 0, 0.2);
+        --shadow-md:
+          0 4px 20px rgba(0, 0, 0, 0.45), 0 1px 4px rgba(0, 0, 0, 0.3);
+        --shadow-lg:
+          0 12px 40px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4);
+        --shadow-note: 0 4px 24px rgba(0, 0, 0, 0.5);
+        /* legacy aliases kept for JS-generated HTML */
+        --surface: #16161e;
+        --surface2: #1a1a24;
+        --surface3: #22222e;
+        --muted: #5a5870;
+        --border2: rgba(255, 255, 255, 0.11);
+        --accent2: #8b7cf8;
+        --accent3: #f26c6c;
+        --accent4: #5ea0f0;
+        --danger: #f26c6c;
+        --sidebar-w: 220px;
+        --topbar-h: 52px;
       }
 
-      /* ═══════════════════════════════════════════════
-   RESET & BASE
-═══════════════════════════════════════════════ */
+      /* ──────────────────────────────────────────────────────────────
+   DESIGN TOKENS — Light
+────────────────────────────────────────────────────────────── */
+      [data-theme="light"] {
+        --bg: #f5f5f8;
+        --bg-elevated: #ffffff;
+        --bg-card: #ffffff;
+        --bg-input: #f0f0f4;
+        --bg-hover: #f0f0f5;
+        --border: rgba(0, 0, 0, 0.07);
+        --border-med: rgba(0, 0, 0, 0.11);
+        --border-hi: rgba(0, 0, 0, 0.18);
+        --text: #18181f;
+        --text-2: #6b697f;
+        --text-3: #aaa8be;
+        --accent: #6baa00;
+        --accent-dim: rgba(107, 170, 0, 0.1);
+        --accent-glow: rgba(107, 170, 0, 0.18);
+        --accent-dark: #578a00;
+        --surface-glass: rgba(255, 255, 255, 0.9);
+        --shadow-sm:
+          0 1px 4px rgba(0, 0, 0, 0.06), 0 2px 10px rgba(0, 0, 0, 0.05);
+        --shadow-md:
+          0 4px 18px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.06);
+        --shadow-lg:
+          0 12px 40px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.08);
+        --shadow-note: 0 4px 20px rgba(0, 0, 0, 0.12);
+        --surface: #ffffff;
+        --surface2: #ffffff;
+        --surface3: #f0f0f4;
+        --muted: #aaa8be;
+        --border2: rgba(0, 0, 0, 0.11);
+        --accent2: #6b55d4;
+        --accent3: #d94f4f;
+        --accent4: #2b7fcf;
+        --danger: #d94f4f;
+      }
+
+      /* ──────────────────────────────────────────────────────────────
+   RESET
+────────────────────────────────────────────────────────────── */
       *,
       *::before,
       *::after {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+      }
+      html {
+        font-size: 16px;
       }
       body {
         font-family: "DM Sans", sans-serif;
@@ -50,6 +132,21 @@
         height: 100vh;
         overflow: hidden;
         -webkit-font-smoothing: antialiased;
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+      button {
+        font-family: "DM Sans", sans-serif;
+        cursor: pointer;
+        border: none;
+        outline: none;
+      }
+      input,
+      textarea {
+        font-family: "DM Sans", sans-serif;
+        outline: none;
+        border: none;
       }
       ::-webkit-scrollbar {
         width: 4px;
@@ -59,73 +156,86 @@
         background: transparent;
       }
       ::-webkit-scrollbar-thumb {
-        background: var(--surface3);
+        background: var(--border-med);
         border-radius: 99px;
       }
-      button {
-        font-family: "DM Sans", sans-serif;
-        cursor: pointer;
-      }
 
-      /* ═══════════════════════════════════════════════
-   LAYOUT SHELL
-═══════════════════════════════════════════════ */
+      /* ──────────────────────────────────────────────────────────────
+   APP SHELL
+────────────────────────────────────────────────────────────── */
       #app {
         display: flex;
         height: 100vh;
         overflow: hidden;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      #app.ready {
+        visibility: visible;
+        opacity: 1;
       }
 
-      /* ═══════════════════════════════════════════════
+      /* ──────────────────────────────────────────────────────────────
    SIDEBAR
-═══════════════════════════════════════════════ */
+────────────────────────────────────────────────────────────── */
       #sidebar {
         width: var(--sidebar-w);
         min-width: var(--sidebar-w);
-        background: var(--surface);
+        background: var(--bg-elevated);
         border-right: 1px solid var(--border);
         display: flex;
         flex-direction: column;
-        padding: 20px 14px 16px;
-        gap: 4px;
+        padding: 0 0 16px 0;
         overflow-y: auto;
+        overflow-x: hidden;
+        flex-shrink: 0;
         z-index: 10;
       }
       .logo {
         font-family: "Syne", sans-serif;
-        font-size: 22px;
+        font-size: 18px;
         font-weight: 800;
         color: var(--accent);
-        letter-spacing: -0.5px;
-        padding: 6px 10px 18px;
+        padding: 22px 18px 20px;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 9px;
+        letter-spacing: -0.3px;
         user-select: none;
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
       }
       .logo-pulse {
         width: 8px;
         height: 8px;
         background: var(--accent);
         border-radius: 50%;
-        animation: pulse 2.5s ease-in-out infinite;
+        animation: logoPulse 2.8s ease-in-out infinite;
       }
-      @keyframes pulse {
+      @keyframes logoPulse {
         0%,
         100% {
-          box-shadow: 0 0 0 0 rgba(200, 245, 100, 0.4);
+          box-shadow: 0 0 0 0 var(--accent-glow);
         }
         50% {
-          box-shadow: 0 0 0 5px rgba(200, 245, 100, 0);
+          box-shadow: 0 0 0 6px transparent;
         }
       }
       .sidebar-label {
         font-size: 10px;
-        font-weight: 500;
-        letter-spacing: 1.3px;
+        font-weight: 600;
+        letter-spacing: 1.2px;
         text-transform: uppercase;
-        color: var(--muted);
-        padding: 10px 10px 4px;
+        color: var(--text-3);
+        padding: 16px 18px 6px;
+      }
+      #sb-subjects {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 0 8px;
+        flex: 1;
       }
       .subject-item {
         display: flex;
@@ -134,18 +244,24 @@
         padding: 9px 10px;
         border-radius: var(--r-sm);
         cursor: pointer;
-        transition:
-          background 0.15s,
-          border-color 0.15s;
+        transition: background 0.15s;
         position: relative;
         border: 1px solid transparent;
+        min-width: 0;
       }
       .subject-item:hover {
-        background: var(--surface2);
+        background: var(--bg-hover);
       }
       .subject-item.active {
-        background: var(--surface2);
-        border-color: var(--border);
+        background: var(--accent-dim);
+        border-color: rgba(184, 240, 74, 0.2);
+      }
+      [data-theme="light"] .subject-item.active {
+        background: var(--accent-dim);
+        border-color: rgba(107, 170, 0, 0.2);
+      }
+      .subject-item.active .subject-name {
+        color: var(--text);
       }
       .subject-item.active::before {
         content: "";
@@ -154,7 +270,7 @@
         top: 50%;
         transform: translateY(-50%);
         width: 3px;
-        height: 55%;
+        height: 60%;
         background: var(--accent);
         border-radius: 0 3px 3px 0;
       }
@@ -167,6 +283,7 @@
       .subject-name {
         font-size: 13px;
         font-weight: 500;
+        color: var(--text-2);
         flex: 1;
         white-space: nowrap;
         overflow: hidden;
@@ -174,15 +291,14 @@
       }
       .exam-badge {
         font-size: 10px;
-        color: var(--muted);
+        color: var(--text-3);
         display: block;
         margin-top: 1px;
       }
       .subject-del {
         opacity: 0;
         background: none;
-        border: none;
-        color: var(--muted);
+        color: var(--text-3);
         font-size: 15px;
         padding: 2px 4px;
         border-radius: 4px;
@@ -194,40 +310,87 @@
         opacity: 1;
       }
       .subject-del:hover {
-        color: var(--danger);
+        color: var(--red);
       }
       #add-subj-btn {
-        margin-top: 6px;
+        margin: 6px 8px 0;
         display: flex;
         align-items: center;
         gap: 8px;
         padding: 9px 10px;
         border-radius: var(--r-sm);
-        color: var(--muted);
+        color: var(--text-3);
         font-size: 12.5px;
         background: none;
-        border: 1px dashed rgba(255, 255, 255, 0.1);
-        width: 100%;
+        border: 1.5px dashed var(--border-med);
+        width: calc(100% - 16px);
         transition: all 0.15s;
       }
       #add-subj-btn:hover {
         color: var(--accent);
         border-color: var(--accent);
-        background: rgba(200, 245, 100, 0.04);
-      }
-      .sidebar-footer {
-        margin-top: auto;
-        padding-top: 14px;
-        border-top: 1px solid var(--border);
-        font-size: 10.5px;
-        color: var(--muted);
-        text-align: center;
-        line-height: 1.6;
+        background: var(--accent-dim);
       }
 
-      /* ═══════════════════════════════════════════════
+      /* ── Sidebar user strip ── */
+      .sidebar-user-strip {
+        margin-top: auto;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-width: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .sidebar-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        object-fit: cover;
+        background: var(--bg-hover);
+        flex-shrink: 0;
+      }
+      .sidebar-username {
+        flex: 1;
+        font-size: 11.5px;
+        font-weight: 500;
+        color: var(--text-2);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+      }
+      .sidebar-guest-badge {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--yellow);
+        background: var(--yellow-dim);
+        padding: 2px 7px;
+        border-radius: 99px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      #btn-signout {
+        background: none;
+        color: var(--text-3);
+        font-size: 11px;
+        padding: 4px 7px;
+        border-radius: 5px;
+        transition: all 0.15s;
+        white-space: nowrap;
+        flex-shrink: 0;
+        font-family: "DM Sans", sans-serif;
+      }
+      #btn-signout:hover {
+        color: var(--red);
+        background: var(--red-dim);
+      }
+
+      /* ──────────────────────────────────────────────────────────────
    MAIN COLUMN
-═══════════════════════════════════════════════ */
+────────────────────────────────────────────────────────────── */
       #main {
         flex: 1;
         display: flex;
@@ -235,10 +398,6 @@
         overflow: hidden;
         min-width: 0;
       }
-
-      /* ═══════════════════════════════════════════════
-   TOPBAR
-═══════════════════════════════════════════════ */
       #topbar {
         height: var(--topbar-h);
         border-bottom: 1px solid var(--border);
@@ -247,7 +406,7 @@
         padding: 0 24px;
         gap: 14px;
         flex-shrink: 0;
-        background: var(--surface);
+        background: var(--bg-elevated);
       }
       #page-title {
         font-family: "Syne", sans-serif;
@@ -269,40 +428,86 @@
         font-weight: 500;
         padding: 7px 14px;
         border-radius: 99px;
-        border: 1px solid var(--border);
+        border: 1px solid var(--border-med);
         background: none;
-        color: var(--muted);
+        color: var(--text-2);
         transition: all 0.15s;
         white-space: nowrap;
       }
       .btn:hover {
         color: var(--text);
-        border-color: var(--border2);
+        border-color: var(--border-hi);
       }
       .btn.active {
         background: var(--accent);
-        color: #0d0d12;
+        color: #0e1300;
         border-color: var(--accent);
         font-weight: 600;
       }
-      .btn.danger {
-        border-color: rgba(245, 100, 100, 0.3);
-        color: var(--accent3);
-      }
-      .btn.danger:hover {
-        background: rgba(245, 100, 100, 0.12);
-      }
       .btn.accent {
-        border-color: var(--accent2);
-        color: var(--accent2);
+        border-color: var(--purple);
+        color: var(--purple);
       }
       .btn.accent:hover {
-        background: rgba(123, 110, 246, 0.1);
+        background: var(--purple-dim);
+      }
+      .btn.danger {
+        border-color: var(--red-dim);
+        color: var(--red);
+      }
+      .btn.danger:hover {
+        background: var(--red-dim);
       }
 
-      /* ═══════════════════════════════════════════════
+      /* ── Sync badge ── */
+      #sync-badge {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11px;
+        font-weight: 500;
+        padding: 5px 11px;
+        border-radius: 99px;
+        transition: all 0.25s;
+        opacity: 0;
+        pointer-events: none;
+      }
+      #sync-badge.show {
+        opacity: 1;
+      }
+      #sync-badge.syncing {
+        color: var(--blue);
+        background: var(--blue-dim);
+        border: 1px solid rgba(94, 160, 240, 0.2);
+      }
+      #sync-badge.saved {
+        color: var(--accent);
+        background: var(--accent-dim);
+        border: 1px solid rgba(184, 240, 74, 0.2);
+      }
+      #sync-badge.local {
+        color: var(--yellow);
+        background: var(--yellow-dim);
+        border: 1px solid rgba(245, 200, 66, 0.2);
+      }
+      #sync-badge.error {
+        color: var(--red);
+        background: var(--red-dim);
+        border: 1px solid rgba(242, 108, 108, 0.2);
+      }
+      .sync-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      #sync-badge.syncing .sync-dot {
+        animation: logoPulse 1s ease-in-out infinite;
+      }
+
+      /* ──────────────────────────────────────────────────────────────
    DASHBOARD
-═══════════════════════════════════════════════ */
+────────────────────────────────────────────────────────────── */
       #dashboard {
         flex: 1;
         overflow-y: auto;
@@ -313,7 +518,7 @@
       }
       .dash-header h1 {
         font-family: "Syne", sans-serif;
-        font-size: 34px;
+        font-size: 32px;
         font-weight: 800;
         letter-spacing: -1px;
         line-height: 1.1;
@@ -322,23 +527,29 @@
         color: var(--accent);
       }
       .dash-header p {
-        color: var(--muted);
+        color: var(--text-2);
         margin-top: 7px;
         font-size: 14px;
       }
-
       .stats-bar {
         display: flex;
-        gap: 14px;
+        gap: 12px;
         margin-bottom: 26px;
         flex-wrap: wrap;
       }
       .stat-card {
-        background: var(--surface);
+        background: var(--bg-card);
         border: 1px solid var(--border);
         border-radius: var(--r);
         padding: 14px 18px;
         min-width: 110px;
+        transition:
+          border-color 0.2s,
+          transform 0.2s;
+      }
+      .stat-card:hover {
+        border-color: var(--border-med);
+        transform: translateY(-2px);
       }
       .stat-val {
         font-family: "Syne", sans-serif;
@@ -350,26 +561,36 @@
       }
       .stat-label {
         font-size: 11px;
-        color: var(--muted);
+        color: var(--text-3);
       }
-
       .subjects-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         gap: 14px;
       }
       .subject-card {
-        background: var(--surface);
+        background: var(--bg-card);
         border: 1px solid var(--border);
         border-radius: var(--r);
-        padding: 18px;
+        padding: 18px 20px;
         cursor: pointer;
-        transition:
-          transform 0.18s,
-          box-shadow 0.18s,
-          border-color 0.18s;
         position: relative;
         overflow: hidden;
+        transition:
+          border-color 0.2s,
+          transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+          box-shadow 0.2s;
+        animation: cardReveal 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      }
+      @keyframes cardReveal {
+        from {
+          opacity: 0;
+          transform: translateY(10px) scale(0.96);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
       }
       .subject-card::before {
         content: "";
@@ -378,13 +599,13 @@
         left: 0;
         right: 0;
         height: 3px;
-        background: var(--card-color, var(--accent2));
+        background: var(--card-color, var(--purple));
         border-radius: var(--r) var(--r) 0 0;
       }
       .subject-card:hover {
-        border-color: var(--border2);
-        transform: translateY(-2px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+        border-color: var(--border-med);
+        transform: translateY(-3px) scale(1.01);
+        box-shadow: var(--shadow-md);
       }
       .card-top {
         display: flex;
@@ -400,11 +621,11 @@
         align-items: center;
         justify-content: center;
         font-size: 18px;
+        background: var(--bg-hover);
       }
       .card-menu {
         background: none;
-        border: none;
-        color: var(--muted);
+        color: var(--text-3);
         font-size: 17px;
         padding: 4px;
         border-radius: 6px;
@@ -412,18 +633,21 @@
         line-height: 1;
       }
       .card-menu:hover {
-        background: var(--surface2);
+        background: var(--bg-hover);
         color: var(--text);
       }
       .card-name {
         font-family: "Syne", sans-serif;
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 700;
         margin-bottom: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .card-exam {
         font-size: 12px;
-        color: var(--muted);
+        color: var(--text-2);
         display: flex;
         align-items: center;
         gap: 5px;
@@ -439,13 +663,13 @@
       }
       .card-stat {
         font-size: 11.5px;
-        color: var(--muted);
+        color: var(--text-3);
         display: flex;
         align-items: center;
         gap: 4px;
       }
       .card-stat span {
-        color: var(--text);
+        color: var(--text-2);
         font-weight: 500;
       }
       .chip {
@@ -460,8 +684,8 @@
         border-radius: 99px;
       }
       .chip-priority {
-        background: rgba(245, 100, 100, 0.12);
-        color: var(--accent3);
+        background: var(--red-dim);
+        color: var(--red);
       }
       .countdown {
         font-size: 10.5px;
@@ -470,20 +694,20 @@
         font-weight: 500;
       }
       .c-soon {
-        background: rgba(245, 100, 100, 0.13);
-        color: var(--accent3);
+        background: var(--red-dim);
+        color: var(--red);
       }
       .c-mid {
-        background: rgba(245, 196, 66, 0.13);
-        color: #f5c442;
+        background: var(--yellow-dim);
+        color: var(--yellow);
       }
       .c-ok {
-        background: rgba(100, 214, 245, 0.11);
-        color: var(--accent4);
+        background: var(--blue-dim);
+        color: var(--blue);
       }
       .add-card {
         background: none;
-        border: 1px dashed rgba(255, 255, 255, 0.09);
+        border: 1.5px dashed var(--border-med);
         border-radius: var(--r);
         padding: 18px;
         cursor: pointer;
@@ -494,13 +718,13 @@
         justify-content: center;
         gap: 9px;
         min-height: 140px;
-        color: var(--muted);
+        color: var(--text-3);
         font-size: 13px;
       }
       .add-card:hover {
         border-color: var(--accent);
         color: var(--accent);
-        background: rgba(200, 245, 100, 0.03);
+        background: var(--accent-dim);
       }
       .add-card-icon {
         font-size: 26px;
@@ -508,13 +732,13 @@
       .dash-empty {
         text-align: center;
         padding: 60px 0;
-        color: var(--muted);
+        color: var(--text-2);
         grid-column: 1/-1;
       }
       .dash-empty-icon {
         font-size: 52px;
         margin-bottom: 14px;
-        opacity: 0.28;
+        opacity: 0.2;
       }
       .dash-empty h3 {
         font-family: "Syne", sans-serif;
@@ -527,52 +751,49 @@
         font-size: 13px;
       }
 
-      /* ═══════════════════════════════════════════════
+      /* ──────────────────────────────────────────────────────────────
    WORKSPACE
-═══════════════════════════════════════════════ */
+────────────────────────────────────────────────────────────── */
       #workspace {
         flex: 1;
         display: flex;
         overflow: hidden;
       }
 
-      /* ═══════════════════════════════════════════════
+      /* ──────────────────────────────────────────────────────────────
    INFINITE CANVAS
-═══════════════════════════════════════════════ */
+────────────────────────────────────────────────────────────── */
       #canvas-panel {
         flex: 1;
         position: relative;
         overflow: hidden;
+        cursor: default;
+        user-select: none;
         background:
           radial-gradient(
             ellipse at 25% 35%,
-            rgba(123, 110, 246, 0.05) 0%,
+            rgba(139, 124, 248, 0.05) 0%,
             transparent 55%
           ),
           radial-gradient(
             ellipse at 75% 65%,
-            rgba(200, 245, 100, 0.03) 0%,
+            rgba(184, 240, 74, 0.03) 0%,
             transparent 50%
           ),
           var(--bg);
-        cursor: default;
-        user-select: none;
       }
-      /* dot grid via CSS (no DOM element) */
       #canvas-panel::before {
         content: "";
         position: absolute;
         inset: 0;
+        pointer-events: none;
+        opacity: 0.45;
         background-image: radial-gradient(
           circle,
-          rgba(255, 255, 255, 0.11) 1px,
+          var(--border-med) 1px,
           transparent 1px
         );
         background-size: 28px 28px;
-        pointer-events: none;
-        opacity: 0.45;
-        transform-origin: 0 0;
-        /* grid moves with camera via JS-updated CSS variables */
         background-position: var(--grid-ox, 0px) var(--grid-oy, 0px);
       }
       #canvas-panel.panning {
@@ -581,8 +802,6 @@
       #canvas-panel.pan-ready {
         cursor: grab;
       }
-
-      /* The single GPU-accelerated world transform wrapper */
       #canvas-world {
         position: absolute;
         top: 0;
@@ -590,8 +809,6 @@
         transform-origin: 0 0;
         will-change: transform;
       }
-
-      /* SVG connection layer — sits inside #canvas-world, below notes */
       #conn-svg {
         position: absolute;
         top: 0;
@@ -603,29 +820,29 @@
       }
       .conn-path {
         fill: none;
-        stroke: rgba(123, 110, 246, 0.5);
+        stroke: var(--purple);
         stroke-width: 2;
-        stroke-dasharray: 6 4;
+        stroke-dasharray: 7 5;
+        opacity: 0.5;
         pointer-events: stroke;
         cursor: pointer;
-        transition: stroke 0.15s;
+        transition:
+          opacity 0.15s,
+          stroke 0.15s;
       }
       .conn-path:hover {
-        stroke: rgba(123, 110, 246, 0.9);
-      }
-      .conn-path.deleting {
-        stroke: var(--accent3);
+        opacity: 1;
       }
 
-      /* NOTE */
+      /* Note card */
       .note {
         position: absolute;
         min-width: 175px;
         max-width: 290px;
-        background: var(--surface);
+        background: var(--bg-card);
         border: 1px solid var(--border);
         border-radius: var(--r);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.32);
+        box-shadow: var(--shadow-note);
         cursor: grab;
         animation: noteIn 0.18s ease-out;
         transition:
@@ -647,18 +864,18 @@
         cursor: grabbing;
       }
       .note.dragging {
-        box-shadow: 0 14px 42px rgba(0, 0, 0, 0.5);
+        box-shadow: var(--shadow-lg);
         z-index: 999;
       }
       .note.selected {
         border-color: var(--accent);
         box-shadow:
-          0 0 0 2px rgba(200, 245, 100, 0.18),
-          0 8px 28px rgba(0, 0, 0, 0.4);
+          0 0 0 2px var(--accent-glow),
+          var(--shadow-note);
       }
       .note.connecting-source {
-        border-color: var(--accent2);
-        box-shadow: 0 0 0 2px rgba(123, 110, 246, 0.3);
+        border-color: var(--purple);
+        box-shadow: 0 0 0 2px var(--purple-dim);
       }
       .note-bar {
         height: 6px;
@@ -673,17 +890,16 @@
         line-height: 1.6;
         color: var(--text);
         background: none;
-        border: none;
-        outline: none;
         width: 100%;
         resize: none;
         min-height: 56px;
         max-height: 220px;
         cursor: text;
         display: block;
+        caret-color: var(--accent);
       }
       .note-text::placeholder {
-        color: var(--muted);
+        color: var(--text-3);
         font-style: italic;
       }
       .note-footer {
@@ -715,28 +931,30 @@
         transform: scale(1.35);
         border-color: rgba(255, 255, 255, 0.35);
       }
+      [data-theme="light"] .note-color-dot:hover {
+        border-color: rgba(0, 0, 0, 0.3);
+      }
       .note-btns {
         display: flex;
         gap: 2px;
       }
       .note-btn {
         background: none;
-        border: none;
         font-size: 13px;
-        color: var(--muted);
+        color: var(--text-3);
         padding: 2px 5px;
         border-radius: 4px;
         transition: all 0.15s;
       }
       .note-btn:hover {
-        background: var(--surface2);
+        background: var(--bg-hover);
         color: var(--text);
       }
       .note-btn.connect-active {
-        color: var(--accent2);
+        color: var(--purple);
       }
 
-      /* canvas HUD — toolbar at bottom */
+      /* HUD */
       .canvas-hud {
         position: absolute;
         bottom: 20px;
@@ -744,63 +962,60 @@
         transform: translateX(-50%);
         display: flex;
         align-items: center;
-        gap: 6px;
-        background: var(--surface);
-        border: 1px solid var(--border2);
+        gap: 4px;
+        background: var(--surface-glass);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid var(--border-med);
         border-radius: 99px;
-        padding: 7px 14px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+        padding: 5px 12px;
+        box-shadow: var(--shadow-md);
         z-index: 20;
         white-space: nowrap;
       }
       .hud-btn {
-        font-size: 12px;
-        font-weight: 500;
         display: flex;
         align-items: center;
         gap: 5px;
-        padding: 6px 13px;
+        padding: 7px 12px;
         border-radius: 99px;
-        border: none;
+        font-size: 12.5px;
+        font-weight: 500;
         background: none;
-        color: var(--muted);
+        color: var(--text-2);
         transition: all 0.15s;
       }
       .hud-btn:hover {
-        background: var(--surface2);
+        background: var(--bg-hover);
         color: var(--text);
       }
       .hud-btn.primary {
         background: var(--accent);
-        color: #0d0d12;
-        font-weight: 600;
+        color: #0e1300;
+        font-weight: 700;
       }
       .hud-btn.primary:hover {
-        background: #d4fa70;
+        background: var(--accent-dark);
       }
       .hud-btn.connect-mode {
-        background: rgba(123, 110, 246, 0.15);
-        color: var(--accent2);
-        border: 1px solid var(--accent2);
+        background: var(--purple-dim);
+        color: var(--purple);
+        border: 1px solid var(--purple);
       }
       .hud-divider {
         width: 1px;
         height: 18px;
-        background: var(--border);
+        background: var(--border-med);
       }
-
-      /* zoom display */
       .zoom-display {
         font-size: 11px;
         font-weight: 600;
-        color: var(--muted);
+        color: var(--text-3);
         padding: 0 6px;
         min-width: 40px;
         text-align: center;
         font-variant-numeric: tabular-nums;
       }
-
-      /* canvas empty state */
       .canvas-empty {
         position: absolute;
         inset: 0;
@@ -809,7 +1024,7 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
-        color: var(--muted);
+        color: var(--text-3);
         pointer-events: none;
       }
       .canvas-empty-icon {
@@ -823,54 +1038,54 @@
         font-size: 11.5px;
         opacity: 0.6;
       }
-
-      /* right-click context menu */
-      #ctx-menu {
-        position: fixed;
-        background: var(--surface);
-        border: 1px solid var(--border2);
-        border-radius: var(--r-sm);
-        padding: 6px;
-        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
-        z-index: 200;
-        min-width: 160px;
-        animation: fadeIn 0.1s ease-out;
+      .kbd-hint {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        display: flex;
+        gap: 8px;
+        z-index: 10;
+        pointer-events: none;
       }
-      .ctx-item {
+      .kbd {
         display: flex;
         align-items: center;
-        gap: 9px;
-        padding: 8px 12px;
-        border-radius: 5px;
-        font-size: 13px;
-        color: var(--text);
-        cursor: pointer;
-        transition: background 0.1s;
-        border: none;
-        background: none;
-        width: 100%;
-        text-align: left;
+        gap: 5px;
+        font-size: 10.5px;
+        color: var(--text-3);
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 4px 8px;
       }
-      .ctx-item:hover {
-        background: var(--surface2);
+      kbd {
+        font-family: "DM Sans", sans-serif;
       }
-      .ctx-item.danger {
-        color: var(--accent3);
-      }
-      .ctx-sep {
-        height: 1px;
-        background: var(--border);
-        margin: 4px 0;
+      .conn-hint {
+        position: absolute;
+        top: 14px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--purple-dim);
+        border: 1px solid var(--purple);
+        border-radius: 99px;
+        padding: 7px 16px;
+        font-size: 12px;
+        color: var(--purple);
+        font-weight: 500;
+        z-index: 30;
+        pointer-events: none;
+        animation: fadeIn 0.2s ease-out;
       }
 
-      /* ═══════════════════════════════════════════════
+      /* ──────────────────────────────────────────────────────────────
    RESOURCES PANEL
-═══════════════════════════════════════════════ */
+────────────────────────────────────────────────────────────── */
       #resources-panel {
         width: 310px;
         min-width: 310px;
         border-left: 1px solid var(--border);
-        background: var(--surface);
+        background: var(--bg-elevated);
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -897,26 +1112,24 @@
         font-weight: 600;
         padding: 6px 12px;
         border-radius: 6px;
-        border: none;
         transition: all 0.15s;
       }
       .btn-primary {
         background: var(--accent);
-        color: #0d0d12;
+        color: #0e1300;
       }
       .btn-primary:hover {
-        background: #d4fa70;
+        background: var(--accent-dark);
       }
       .btn-ghost {
         background: none;
-        color: var(--muted);
-        border: 1px solid var(--border);
+        color: var(--text-2);
+        border: 1px solid var(--border-med);
       }
       .btn-ghost:hover {
         color: var(--text);
-        border-color: var(--border2);
+        border-color: var(--border-hi);
       }
-
       .res-tabs {
         display: flex;
         gap: 2px;
@@ -930,9 +1143,8 @@
         font-weight: 500;
         padding: 5px 10px;
         border-radius: 5px 5px 0 0;
-        border: none;
         background: none;
-        color: var(--muted);
+        color: var(--text-3);
         cursor: pointer;
         transition: all 0.15s;
         border-bottom: 2px solid transparent;
@@ -945,7 +1157,6 @@
         color: var(--accent);
         border-bottom-color: var(--accent);
       }
-
       .res-list {
         flex: 1;
         overflow-y: auto;
@@ -954,10 +1165,8 @@
         flex-direction: column;
         gap: 7px;
       }
-
-      /* Resource item base */
       .res-item {
-        background: var(--surface2);
+        background: var(--bg-card);
         border: 1px solid var(--border);
         border-radius: var(--r-sm);
         transition: border-color 0.15s;
@@ -965,10 +1174,8 @@
         overflow: hidden;
       }
       .res-item:hover {
-        border-color: var(--border2);
+        border-color: var(--border-med);
       }
-
-      /* Standard link/doc/note row */
       .res-item-row {
         display: flex;
         gap: 9px;
@@ -986,30 +1193,29 @@
         flex-shrink: 0;
       }
       .ri-link {
-        background: rgba(100, 214, 245, 0.1);
+        background: var(--blue-dim);
       }
       .ri-video {
-        background: rgba(245, 100, 100, 0.1);
+        background: var(--red-dim);
       }
       .ri-doc {
-        background: rgba(123, 110, 246, 0.1);
+        background: var(--purple-dim);
       }
       .ri-note {
-        background: rgba(200, 245, 100, 0.1);
+        background: var(--yellow-dim);
       }
       .ri-pdf {
-        background: rgba(245, 100, 100, 0.12);
+        background: var(--red-dim);
       }
       .ri-image {
-        background: rgba(100, 245, 180, 0.1);
+        background: var(--teal-dim);
       }
       .ri-text {
-        background: rgba(245, 196, 66, 0.1);
+        background: var(--yellow-dim);
       }
       .ri-file {
-        background: rgba(200, 200, 200, 0.08);
+        background: var(--bg-hover);
       }
-
       .res-info {
         flex: 1;
         min-width: 0;
@@ -1024,10 +1230,10 @@
       }
       .res-meta {
         font-size: 11px;
-        color: var(--muted);
+        color: var(--text-3);
       }
       .res-meta a {
-        color: var(--accent4);
+        color: var(--blue);
         text-decoration: none;
       }
       .res-meta a:hover {
@@ -1046,25 +1252,22 @@
       }
       .res-act {
         background: none;
-        border: none;
         font-size: 12px;
-        color: var(--muted);
+        color: var(--text-3);
         padding: 3px 4px;
         border-radius: 4px;
         transition: all 0.15s;
       }
       .res-act:hover {
-        background: var(--surface);
+        background: var(--bg-hover);
         color: var(--text);
       }
       .res-act.fav-on {
-        color: #f5c442;
+        color: var(--yellow);
       }
       .res-act.danger:hover {
-        color: var(--danger);
+        color: var(--red);
       }
-
-      /* File card (image preview style) */
       .res-item.file-card {
         padding: 0;
       }
@@ -1074,7 +1277,6 @@
         object-fit: cover;
         display: block;
         border-radius: var(--r-sm) var(--r-sm) 0 0;
-        background: var(--surface3);
       }
       .file-preview-icon {
         width: 100%;
@@ -1083,7 +1285,7 @@
         align-items: center;
         justify-content: center;
         font-size: 32px;
-        background: linear-gradient(135deg, var(--surface3), var(--surface2));
+        background: var(--bg-hover);
         border-radius: var(--r-sm) var(--r-sm) 0 0;
       }
       .file-card-body {
@@ -1105,59 +1307,20 @@
       }
       .file-card-size {
         font-size: 10.5px;
-        color: var(--muted);
+        color: var(--text-3);
       }
       .file-card-actions {
         display: flex;
         gap: 3px;
       }
-
-      /* size warning banner */
-      .size-warning {
-        margin: 8px 10px 0;
-        padding: 8px 10px;
-        background: rgba(245, 100, 100, 0.08);
-        border: 1px solid rgba(245, 100, 100, 0.2);
-        border-radius: var(--r-sm);
-        font-size: 11.5px;
-        color: var(--accent3);
-        display: flex;
-        gap: 7px;
-        align-items: flex-start;
-        line-height: 1.4;
-      }
-
-      /* upload drop zone */
-      .upload-zone {
-        border: 1.5px dashed rgba(255, 255, 255, 0.12);
-        border-radius: var(--r-sm);
-        padding: 18px;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.15s;
-        font-size: 12.5px;
-        color: var(--muted);
-      }
-      .upload-zone:hover,
-      .upload-zone.drag-over {
-        border-color: var(--accent);
-        color: var(--accent);
-        background: rgba(200, 245, 100, 0.04);
-      }
-      .upload-zone-icon {
-        font-size: 22px;
-        margin-bottom: 6px;
-      }
-
-      /* add resource form */
       .res-add-area {
         padding: 10px;
         border-top: 1px solid var(--border);
         flex-shrink: 0;
       }
       .res-add-form {
-        background: var(--surface2);
-        border: 1px solid var(--border);
+        background: var(--bg-card);
+        border: 1px solid var(--border-med);
         border-radius: var(--r-sm);
         padding: 11px;
         display: flex;
@@ -1167,12 +1330,11 @@
       .res-input {
         font-family: "DM Sans", sans-serif;
         font-size: 12.5px;
-        background: var(--bg);
-        border: 1px solid var(--border);
+        background: var(--bg-input);
+        border: 1px solid var(--border-med);
         border-radius: 6px;
         padding: 8px 10px;
         color: var(--text);
-        outline: none;
         transition: border-color 0.15s;
         width: 100%;
       }
@@ -1180,7 +1342,7 @@
         border-color: var(--accent);
       }
       .res-input::placeholder {
-        color: var(--muted);
+        color: var(--text-3);
       }
       .type-chips {
         display: flex;
@@ -1192,19 +1354,19 @@
         font-weight: 500;
         padding: 4px 10px;
         border-radius: 99px;
-        border: 1px solid var(--border);
+        border: 1px solid var(--border-med);
         background: none;
-        color: var(--muted);
+        color: var(--text-2);
         transition: all 0.15s;
       }
       .type-chip:hover {
         color: var(--text);
-        border-color: var(--border2);
+        border-color: var(--border-hi);
       }
       .type-chip.active {
-        background: var(--accent2);
+        background: var(--purple);
         color: #fff;
-        border-color: var(--accent2);
+        border-color: var(--purple);
       }
       .btn-row {
         display: flex;
@@ -1217,7 +1379,7 @@
         align-items: center;
         justify-content: center;
         gap: 7px;
-        color: var(--muted);
+        color: var(--text-3);
         font-size: 12.5px;
         padding: 20px;
         text-align: center;
@@ -1226,15 +1388,92 @@
         font-size: 30px;
         opacity: 0.28;
       }
+      #upload-progress-wrap {
+        display: none;
+        padding: 10px 14px 0;
+        flex-shrink: 0;
+      }
+      #upload-progress-wrap.active {
+        display: block;
+      }
+      .upload-progress-track {
+        height: 3px;
+        background: var(--border-med);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      #upload-progress-fill {
+        height: 100%;
+        background: var(--accent);
+        border-radius: 99px;
+        width: 0%;
+        transition: width 0.15s;
+      }
+      #upload-progress-label {
+        font-size: 10.5px;
+        color: var(--text-3);
+        margin-top: 5px;
+      }
 
-      /* ═══════════════════════════════════════════════
+      /* ──────────────────────────────────────────────────────────────
+   CONTEXT MENU
+────────────────────────────────────────────────────────────── */
+      #ctx-menu {
+        position: fixed;
+        background: var(--surface-glass);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--border-med);
+        border-radius: var(--r-sm);
+        padding: 5px;
+        box-shadow: var(--shadow-lg);
+        z-index: 500;
+        min-width: 160px;
+        animation: popIn 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      @keyframes popIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      .ctx-item {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        color: var(--text);
+        background: none;
+        width: 100%;
+        text-align: left;
+        transition: background 0.1s;
+      }
+      .ctx-item:hover {
+        background: var(--bg-hover);
+      }
+      .ctx-item.danger {
+        color: var(--red);
+      }
+      .ctx-sep {
+        height: 1px;
+        background: var(--border);
+        margin: 4px 0;
+      }
+
+      /* ──────────────────────────────────────────────────────────────
    MODAL
-═══════════════════════════════════════════════ */
+────────────────────────────────────────────────────────────── */
       .modal-overlay {
         position: fixed;
         inset: 0;
         background: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(8px);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1250,15 +1489,15 @@
         }
       }
       .modal {
-        background: var(--surface);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: var(--bg-elevated);
+        border: 1px solid var(--border-med);
         border-radius: var(--r);
         padding: 26px;
         width: 400px;
         max-width: 92vw;
         max-height: 90vh;
         overflow-y: auto;
-        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+        box-shadow: var(--shadow-lg);
         animation: slideUp 0.18s ease-out;
       }
       @keyframes slideUp {
@@ -1283,8 +1522,8 @@
       .modal-label {
         display: block;
         font-size: 11px;
-        font-weight: 500;
-        color: var(--muted);
+        font-weight: 600;
+        color: var(--text-3);
         margin-bottom: 5px;
         text-transform: uppercase;
         letter-spacing: 0.6px;
@@ -1292,12 +1531,11 @@
       .modal-input {
         font-family: "DM Sans", sans-serif;
         font-size: 13.5px;
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        border-radius: 8px;
+        background: var(--bg-input);
+        border: 1px solid var(--border-med);
+        border-radius: var(--r-sm);
         padding: 9px 13px;
         color: var(--text);
-        outline: none;
         transition: border-color 0.15s;
         width: 100%;
       }
@@ -1305,7 +1543,7 @@
         border-color: var(--accent);
       }
       .modal-input::placeholder {
-        color: var(--muted);
+        color: var(--text-3);
       }
       .color-grid {
         display: flex;
@@ -1328,27 +1566,30 @@
         border-color: rgba(255, 255, 255, 0.65);
         transform: scale(1.08);
       }
+      [data-theme="light"] .color-swatch.sel {
+        border-color: rgba(0, 0, 0, 0.5);
+      }
       .toggle-row {
         display: flex;
         align-items: center;
         gap: 9px;
         cursor: pointer;
         font-size: 13px;
-        color: var(--muted);
+        color: var(--text-2);
         user-select: none;
       }
       .toggle {
         width: 30px;
         height: 17px;
-        background: var(--surface3);
+        background: var(--bg-hover);
         border-radius: 99px;
         position: relative;
         transition: background 0.18s;
-        border: 1px solid var(--border);
+        border: 1px solid var(--border-med);
       }
       .toggle.on {
-        background: var(--accent3);
-        border-color: var(--accent3);
+        background: var(--red);
+        border-color: var(--red);
       }
       .toggle::after {
         content: "";
@@ -1374,33 +1615,33 @@
         font-size: 13px;
         font-weight: 500;
         padding: 8px 16px;
-        border-radius: 8px;
+        border-radius: var(--r-sm);
         background: none;
-        border: 1px solid var(--border);
-        color: var(--muted);
+        border: 1px solid var(--border-med);
+        color: var(--text-2);
         transition: all 0.15s;
       }
       .btn-cancel:hover {
         color: var(--text);
-        border-color: var(--border2);
+        border-color: var(--border-hi);
       }
       .btn-confirm {
         font-size: 13px;
         font-weight: 600;
         padding: 8px 18px;
-        border-radius: 8px;
+        border-radius: var(--r-sm);
         background: var(--accent);
-        color: #0d0d12;
+        color: #0e1300;
         border: none;
         transition: all 0.15s;
       }
       .btn-confirm:hover {
-        background: #d4fa70;
+        background: var(--accent-dark);
       }
 
-      /* ═══════════════════════════════════════════════
+      /* ──────────────────────────────────────────────────────────────
    TOAST
-═══════════════════════════════════════════════ */
+────────────────────────────────────────────────────────────── */
       #toast-rack {
         position: fixed;
         bottom: 22px;
@@ -1408,97 +1649,37 @@
         display: flex;
         flex-direction: column;
         gap: 7px;
-        z-index: 500;
+        z-index: 600;
       }
       .toast {
-        background: var(--surface);
-        border: 1px solid var(--border2);
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        background: var(--surface-glass);
+        backdrop-filter: blur(14px);
+        border: 1px solid var(--border-med);
         border-radius: 10px;
         padding: 11px 16px;
         font-size: 13px;
         font-weight: 500;
-        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
-        animation: toastIn 0.22s ease-out;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+        box-shadow: var(--shadow-md);
+        animation: toastSlide 0.22s ease-out;
+        max-width: 280px;
       }
-      @keyframes toastIn {
+      @keyframes toastSlide {
         from {
           opacity: 0;
-          transform: translateX(18px);
+          transform: translateX(16px);
         }
         to {
           opacity: 1;
-          transform: translateX(0);
+          transform: none;
         }
       }
 
-      /* ═══════════════════════════════════════════════
-   KEYBOARD HINT
-═══════════════════════════════════════════════ */
-      .kbd-hint {
-        position: absolute;
-        top: 14px;
-        right: 14px;
-        display: flex;
-        gap: 8px;
-        z-index: 10;
-        pointer-events: none;
-      }
-      .kbd {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 10.5px;
-        color: var(--muted);
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        padding: 4px 8px;
-      }
-      kbd {
-        font-family: "DM Sans", sans-serif;
-      }
-
-      /* connection mode overlay hint */
-      .conn-hint {
-        position: absolute;
-        top: 14px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(123, 110, 246, 0.15);
-        border: 1px solid var(--accent2);
-        border-radius: 99px;
-        padding: 7px 16px;
-        font-size: 12px;
-        color: var(--accent2);
-        font-weight: 500;
-        z-index: 30;
-        pointer-events: none;
-        animation: fadeIn 0.2s ease-out;
-      }
-
-      /* preview iframe/image modal */
-      .preview-modal .modal {
-        width: 680px;
-        max-width: 95vw;
-      }
-      .preview-modal img {
-        width: 100%;
-        border-radius: 8px;
-      }
-      .preview-modal iframe {
-        width: 100%;
-        height: 400px;
-        border-radius: 8px;
-        border: none;
-        background: #000;
-      }
-
-      /* ═══════════════════════════════════════════════
+      /* ──────────────────────────────────────────────────────────────
    AUTH GATE
-═══════════════════════════════════════════════ */
+────────────────────────────────────────────────────────────── */
       #auth-gate {
         position: fixed;
         inset: 0;
@@ -1507,62 +1688,95 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 24px;
+        gap: 22px;
         z-index: 9999;
+        background:
+          radial-gradient(
+            ellipse at 30% 40%,
+            rgba(139, 124, 248, 0.07) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse at 70% 60%,
+            rgba(184, 240, 74, 0.04) 0%,
+            transparent 55%
+          ),
+          var(--bg);
       }
-      #auth-gate.hidden { display: none; }
+      #auth-gate.hidden {
+        display: none;
+      }
       .auth-logo {
         font-family: "Syne", sans-serif;
-        font-size: 36px;
+        font-size: 38px;
         font-weight: 800;
         color: var(--accent);
         letter-spacing: -1px;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
         user-select: none;
       }
       .auth-tagline {
         font-size: 14px;
-        color: var(--muted);
-        max-width: 300px;
+        color: var(--text-2);
+        max-width: 320px;
         text-align: center;
-        line-height: 1.6;
+        line-height: 1.65;
       }
       .auth-card {
-        background: var(--surface);
-        border: 1px solid var(--border2);
-        border-radius: 20px;
-        padding: 32px 36px;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border-med);
+        border-radius: 18px;
+        padding: 30px 34px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 18px;
-        box-shadow: 0 28px 72px rgba(0,0,0,0.55);
-        min-width: 320px;
-        max-width: 90vw;
+        gap: 16px;
+        box-shadow: var(--shadow-lg);
+        min-width: 340px;
+        max-width: 92vw;
       }
-      .auth-card h2 {
+      .auth-card-title {
         font-family: "Syne", sans-serif;
-        font-size: 17px;
+        font-size: 18px;
         font-weight: 700;
         color: var(--text);
       }
-      .auth-card p {
+      .auth-card-desc {
         font-size: 12.5px;
-        color: var(--muted);
+        color: var(--text-2);
         text-align: center;
-        line-height: 1.55;
-        margin-top: -4px;
+        line-height: 1.6;
+      }
+      .auth-divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+      }
+      .auth-divider::before,
+      .auth-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border-med);
+      }
+      .auth-divider span {
+        font-size: 11px;
+        color: var(--text-3);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
       #btn-google-login {
         display: flex;
         align-items: center;
         gap: 10px;
-        padding: 12px 22px;
-        background: var(--surface2);
-        border: 1.5px solid var(--border2);
-        border-radius: 10px;
+        padding: 12px 20px;
+        background: var(--bg-card);
+        border: 1.5px solid var(--border-med);
+        border-radius: var(--r-sm);
         color: var(--text);
         font-size: 14px;
         font-weight: 600;
@@ -1573,190 +1787,151 @@
         justify-content: center;
       }
       #btn-google-login:hover {
-        background: var(--surface3);
-        border-color: rgba(200,245,100,0.35);
-        box-shadow: 0 0 0 3px rgba(200,245,100,0.08);
+        background: var(--bg-hover);
+        border-color: var(--border-hi);
+        box-shadow: 0 0 0 3px var(--accent-glow);
       }
       #btn-google-login:disabled {
         opacity: 0.5;
         cursor: not-allowed;
       }
+      #btn-guest-login {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 20px;
+        background: none;
+        border: 1.5px solid var(--border-med);
+        border-radius: var(--r-sm);
+        color: var(--text-2);
+        font-size: 14px;
+        font-weight: 500;
+        font-family: "DM Sans", sans-serif;
+        cursor: pointer;
+        transition: all 0.18s;
+        width: 100%;
+        justify-content: center;
+      }
+      #btn-guest-login:hover {
+        background: var(--bg-hover);
+        color: var(--text);
+        border-color: var(--border-hi);
+      }
       .auth-spinner {
         width: 20px;
         height: 20px;
-        border: 2px solid var(--border2);
+        border: 2px solid var(--border-med);
         border-top-color: var(--accent);
         border-radius: 50%;
         animation: spin 0.7s linear infinite;
         display: none;
       }
-      #auth-gate.loading .auth-spinner { display: block; }
-      #auth-gate.loading #btn-google-login { opacity: 0.45; pointer-events: none; }
-      @keyframes spin { to { transform: rotate(360deg); } }
-      .auth-note {
-        font-size: 11px;
-        color: var(--muted);
-        text-align: center;
-        opacity: 0.7;
+      #auth-gate.loading .auth-spinner {
+        display: block;
       }
-
-      /* ═══════════════════════════════════════════════
-   APP VISIBILITY GATE
-═══════════════════════════════════════════════ */
-      #app {
-        visibility: hidden;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-      #app.ready {
-        visibility: visible;
-        opacity: 1;
-      }
-
-      /* ═══════════════════════════════════════════════
-   SIDEBAR USER STRIP
-═══════════════════════════════════════════════ */
-      .sidebar-user-strip {
-        margin-top: auto;
-        padding-top: 12px;
-        border-top: 1px solid var(--border);
-        display: flex;
-        align-items: center;
-        gap: 9px;
-        min-width: 0;
-      }
-      .sidebar-avatar {
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        object-fit: cover;
-        background: var(--surface3);
-        flex-shrink: 0;
-      }
-      .sidebar-username {
-        flex: 1;
-        font-size: 11.5px;
-        font-weight: 500;
-        color: var(--muted);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        min-width: 0;
-      }
-      #btn-signout {
-        background: none;
-        border: none;
-        color: var(--muted);
-        font-size: 11px;
-        padding: 4px 7px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all 0.15s;
-        white-space: nowrap;
-        flex-shrink: 0;
-        font-family: "DM Sans", sans-serif;
-      }
-      #btn-signout:hover { color: var(--accent3); background: rgba(245,100,100,0.08); }
-
-      /* ═══════════════════════════════════════════════
-   SYNC BADGE (topbar)
-═══════════════════════════════════════════════ */
-      #sync-badge {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 11px;
-        font-weight: 500;
-        padding: 5px 11px;
-        border-radius: 99px;
-        transition: all 0.25s;
-        opacity: 0;
+      #auth-gate.loading #btn-google-login,
+      #auth-gate.loading #btn-guest-login {
+        opacity: 0.45;
         pointer-events: none;
       }
-      #sync-badge.show { opacity: 1; }
-      #sync-badge.syncing {
-        color: var(--accent4);
-        background: rgba(100,214,245,0.08);
-        border: 1px solid rgba(100,214,245,0.18);
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
       }
-      #sync-badge.saved {
-        color: var(--accent);
-        background: rgba(200,245,100,0.07);
-        border: 1px solid rgba(200,245,100,0.15);
+      .auth-note {
+        font-size: 11px;
+        color: var(--text-3);
+        text-align: center;
+        line-height: 1.55;
+        max-width: 280px;
       }
-      #sync-badge.error {
-        color: var(--accent3);
-        background: rgba(245,100,100,0.08);
-        border: 1px solid rgba(245,100,100,0.18);
-      }
-      .sync-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: currentColor;
-      }
-      #sync-badge.syncing .sync-dot {
-        animation: pulse 1s ease-in-out infinite;
-      }
-
-      /* ═══════════════════════════════════════════════
-   UPLOAD PROGRESS BAR
-═══════════════════════════════════════════════ */
-      #upload-progress-wrap {
-        display: none;
-        padding: 10px 14px 0;
-        flex-shrink: 0;
-      }
-      #upload-progress-wrap.active { display: block; }
-      .upload-progress-track {
-        height: 3px;
-        background: var(--border);
-        border-radius: 99px;
-        overflow: hidden;
-      }
-      #upload-progress-fill {
-        height: 100%;
-        background: var(--accent);
-        border-radius: 99px;
-        width: 0%;
-        transition: width 0.15s;
-      }
-      #upload-progress-label {
-        font-size: 10.5px;
-        color: var(--muted);
-        margin-top: 5px;
+      .auth-guest-notice {
+        font-size: 11px;
+        color: var(--yellow);
+        background: var(--yellow-dim);
+        border: 1px solid rgba(245, 200, 66, 0.2);
+        border-radius: 6px;
+        padding: 7px 12px;
+        text-align: center;
+        line-height: 1.5;
+        width: 100%;
       }
     </style>
   </head>
   <body>
-    <!-- ══════════════════════════════════════════════════════
-         AUTH GATE  — hidden once the user is signed in
-    ══════════════════════════════════════════════════════ -->
+    <!-- AUTH GATE -->
     <div id="auth-gate">
-      <div class="auth-logo">
-        <span class="logo-pulse"></span>Alumly
-      </div>
+      <div class="auth-logo"><span class="logo-pulse"></span>Alumly</div>
       <div class="auth-tagline">
         Plan, brainstorm, and organise everything in one infinite space.
       </div>
       <div class="auth-card">
-        <h2>Sign in to Alumly</h2>
-        <p>Your data is stored securely in the cloud<br>and syncs across all your devices.</p>
+        <div class="auth-card-title">Welcome back</div>
+        <div class="auth-card-desc">
+          Sign in to sync your data across devices,<br />or continue as a guest
+          with local storage.
+        </div>
+
         <button id="btn-google-login">
-          <!-- Official Google "G" SVG -->
-          <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.64 9.2045c0-.6381-.0573-1.2518-.1636-1.8418H9v3.4814h4.8436c-.2086 1.125-.8427 2.0782-1.7959 2.7164v2.2581h2.9087c1.7018-1.5668 2.6836-3.874 2.6836-6.6141z" fill="#4285F4"/>
-            <path d="M9 18c2.43 0 4.4673-.806 5.9564-2.1814l-2.9087-2.2581c-.8064.54-1.8368.859-3.0477.859-2.3445 0-4.3282-1.5836-5.036-3.7109H.9574v2.3318C2.4382 15.9832 5.4818 18 9 18z" fill="#34A853"/>
-            <path d="M3.964 10.71C3.7868 10.17 3.6864 9.5945 3.6864 9s.1004-1.17.2777-1.71V4.9582H.9574C.3477 6.1731 0 7.5477 0 9c0 1.4523.3477 2.8268.9574 4.0418L3.964 10.71z" fill="#FBBC05"/>
-            <path d="M9 3.5795c1.3214 0 2.5077.4541 3.4405 1.346l2.5813-2.5814C13.4632.8918 11.426 0 9 0 5.4818 0 2.4382 2.0168.9574 4.9582L3.964 7.29C4.6718 5.1627 6.6555 3.5795 9 3.5795z" fill="#EA4335"/>
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.64 9.2045c0-.6381-.0573-1.2518-.1636-1.8418H9v3.4814h4.8436c-.2086 1.125-.8427 2.0782-1.7959 2.7164v2.2581h2.9087c1.7018-1.5668 2.6836-3.874 2.6836-6.6141z"
+              fill="#4285F4"
+            />
+            <path
+              d="M9 18c2.43 0 4.4673-.806 5.9564-2.1814l-2.9087-2.2581c-.8064.54-1.8368.859-3.0477.859-2.3445 0-4.3282-1.5836-5.036-3.7109H.9574v2.3318C2.4382 15.9832 5.4818 18 9 18z"
+              fill="#34A853"
+            />
+            <path
+              d="M3.964 10.71C3.7868 10.17 3.6864 9.5945 3.6864 9s.1004-1.17.2777-1.71V4.9582H.9574C.3477 6.1731 0 7.5477 0 9c0 1.4523.3477 2.8268.9574 4.0418L3.964 10.71z"
+              fill="#FBBC05"
+            />
+            <path
+              d="M9 3.5795c1.3214 0 2.5077.4541 3.4405 1.346l2.5813-2.5814C13.4632.8918 11.426 0 9 0 5.4818 0 2.4382 2.0168.9574 4.9582L3.964 7.29C4.6718 5.1627 6.6555 3.5795 9 3.5795z"
+              fill="#EA4335"
+            />
           </svg>
           Continue with Google
         </button>
+
+        <div class="auth-divider"><span>or</span></div>
+
+        <button id="btn-guest-login">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle
+              cx="8"
+              cy="5.5"
+              r="2.5"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <path
+              d="M2 13c0-2.5 2.5-4 6-4s6 1.5 6 4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+          Continue as Guest
+        </button>
+
+        <div class="auth-guest-notice">
+          ⚠ Guest data is saved locally in your browser only — not synced to the
+          cloud. Sign in anytime to upgrade.
+        </div>
+
         <div class="auth-spinner"></div>
-        <div class="auth-note">Signing in enables cloud sync &amp; cross-device access.</div>
+        <div class="auth-note">
+          By signing in you agree to your data being stored in Firebase.
+        </div>
       </div>
     </div>
-
 
     <div id="app">
       <!-- ══ SIDEBAR ══ -->
@@ -1768,7 +1943,11 @@
           ＋ Add Subject
         </button>
         <!-- User strip — populated by JS after auth -->
-        <div id="sidebar-user-strip" class="sidebar-user-strip" style="display:none"></div>
+        <div
+          id="sidebar-user-strip"
+          class="sidebar-user-strip"
+          style="display: none"
+        ></div>
       </aside>
 
       <!-- ══ MAIN ══ -->
@@ -1988,8 +2167,7 @@
       /* ─────────────────────────────────────────────────────────
          IMPORTS  (Firebase v10 modular CDN — no npm required)
       ───────────────────────────────────────────────────────── */
-      import { initializeApp }
-        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
       import {
         getAuth,
         GoogleAuthProvider,
@@ -2015,76 +2193,91 @@
          FIREBASE INITIALISATION
       ───────────────────────────────────────────────────────── */
       const firebaseConfig = {
-        apiKey:            "AIzaSyCWzwUc9dYgPsYlZnhFDD6W4Mat9IO2udQ",
-        authDomain:        "alumly-app.firebaseapp.com",
-        projectId:         "alumly-app",
-        storageBucket:     "alumly-app.firebasestorage.app",
-        messagingSenderId: "98501411336",
-        appId:             "1:98501411316:web:11a4fca7f669c64c2c79a1",
+        apiKey: "AIzaSyCWzwUc9dYgPsYlZnhFDD6W4Mat9IO2udQ",
+        authDomain: "alumly-app.firebaseapp.com",
+        projectId: "alumly-app",
+        storageBucket: "alumly-app.firebasestorage.app",
+        messagingSenderId: "98501411316",
+        appId: "1:98501411316:web:11a4fca7f669c64c2c79a1",
       };
-      const fbApp    = initializeApp(firebaseConfig);
-      const fbAuth   = getAuth(fbApp);
-      const fbDb     = getFirestore(fbApp);
-      const fbStore  = getStorage(fbApp);
+      const fbApp = initializeApp(firebaseConfig);
+      const fbAuth = getAuth(fbApp);
+      const fbDb = getFirestore(fbApp);
+      const fbStore = getStorage(fbApp);
       const provider = new GoogleAuthProvider();
 
       /* ═══════════════════════════════════════════════════════════════
-   SECTION 1 — STATE & CLOUD PERSISTENCE
+   SECTION 1 — STATE & PERSISTENCE
    ─────────────────────────────────────────────────────────────────
-   Architecture:
-     • `state` is the single in-memory source of truth.
-     • `save()` is debounced: every mutation queues a 500 ms Firestore write.
-     • `onSnapshot` keeps state in sync with any remote changes
-       (cross-device / another tab).
-     • `currentUser` holds the Firebase Auth user object.
-     • `unsubSnap` is the Firestore listener unsubscribe handle.
+   Two modes:
+     GUEST MODE  — localStorage only, no sign-in required.
+     GOOGLE MODE — Firestore, real-time cloud sync, cross-device.
+
+   isGuestMode flag drives all persistence decisions.
+   save() is the single write call used by all other modules.
 ═══════════════════════════════════════════════════════════════ */
-      const MAX_FILE_MB = 20;           // raised from 5 MB
+      const STORAGE_KEY = "alumly_guest_v1";
+      const MAX_FILE_MB = 20;
       const NOTE_COLORS = [
-        "#7b6ef6","#c8f564","#f56464","#64d6f5",
-        "#f5c442","#f564c8","#64f596",
+        "#7b6ef6",
+        "#c8f564",
+        "#f56464",
+        "#64d6f5",
+        "#f5c442",
+        "#f564c8",
+        "#64f596",
       ];
       const SUBJ_COLORS = [
-        "#7b6ef6","#c8f564","#f56464","#64d6f5",
-        "#f5c442","#f564c8","#64f596","#f5a064",
+        "#7b6ef6",
+        "#c8f564",
+        "#f56464",
+        "#64d6f5",
+        "#f5c442",
+        "#f564c8",
+        "#64f596",
+        "#f5a064",
       ];
 
-      let state = {
-        subjects: [],
-        currentSubjectId: null,
-      };
+      let state = { subjects: [], currentSubjectId: null };
+      let isGuestMode = false; // true while user chose "Continue as Guest"
+      let currentUser = null; // Firebase Auth user, null in guest mode
+      let unsubSnap = null; // Firestore listener unsubscribe handle
+      let syncTimer = null; // Debounce handle for cloud writes
 
-      /** Active Firebase Auth user — null when signed out */
-      let currentUser = null;
-
-      /** Unsubscribe handle for the Firestore onSnapshot listener */
-      let unsubSnap = null;
-
-      /** Debounce timer handle for cloud writes */
-      let syncTimer = null;
-
-      /* ── Normalise subject (keeps schema forward-compatible) ── */
       function normalizeSubject(s) {
         return {
-          notes:       [],
-          resources:   [],
+          notes: [],
+          resources: [],
           connections: [],
-          priority:    false,
-          emoji:       "📘",
-          viewport:    { scale: 1, ox: 0, oy: 0 },
+          priority: false,
+          emoji: "📘",
+          viewport: { scale: 1, ox: 0, oy: 0 },
           ...s,
         };
       }
-
-      /**
-       * getSubject — BUG FIX: returns subject by id unconditionally.
-       * Past exam dates are shown as badges; they never block access.
-       */
       function getSubject(id) {
         return state.subjects.find((s) => s.id === id) ?? null;
       }
 
-      /* ── Cloud write (debounced 500 ms) ── */
+      /* ── Guest persistence (localStorage) ── */
+      function _guestSave() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state.subjects));
+          _showSyncBadge("local");
+        } catch (e) {
+          showToast("⚠️", "Local storage full — export your data", 4000);
+        }
+      }
+      function _guestLoad() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) state.subjects = JSON.parse(raw).map(normalizeSubject);
+        } catch (e) {
+          /* start fresh */
+        }
+      }
+
+      /* ── Cloud persistence (Firestore) ── */
       function scheduleCloudWrite() {
         clearTimeout(syncTimer);
         _showSyncBadge("syncing");
@@ -2092,170 +2285,169 @@
           if (!currentUser) return;
           try {
             const ref = doc(fbDb, "users", currentUser.uid);
-            // Only persist the subjects array — currentSubjectId is local nav state
             await setDoc(ref, { subjects: state.subjects }, { merge: false });
             _showSyncBadge("saved");
           } catch (err) {
-            console.error("[Alumly] Firestore write error:", err);
+            console.error("[Alumly] Firestore write:", err);
             _showSyncBadge("error");
             showToast("❌", "Cloud sync failed — check your connection", 4000);
           }
         }, 500);
       }
-
-      /**
-       * save() — drop-in replacement for the old localStorage save().
-       * All existing call-sites (camera.reset, drag end, updateNoteText, etc.)
-       * continue to call save() without modification.
-       */
-      function save() {
-        scheduleCloudWrite();
-      }
-
-      /* ── Attach real-time listener ── */
       function attachRealtimeListener(uid) {
-        if (unsubSnap) unsubSnap();   // detach any previous listener
+        if (unsubSnap) unsubSnap();
         const ref = doc(fbDb, "users", uid);
         unsubSnap = onSnapshot(
           ref,
           (snap) => {
-            if (!snap.exists()) return;   // brand-new user, doc doesn't exist yet
-            const remoteSubjects = (snap.data().subjects || []).map(normalizeSubject);
-
-            // Merge: keep local currentSubjectId (navigation state only)
-            state.subjects = remoteSubjects;
-
-            // Re-render whatever view is active
+            if (!snap.exists()) return;
+            state.subjects = (snap.data().subjects || []).map(normalizeSubject);
             renderSidebar();
             if (state.currentSubjectId) {
-              const s = getSubject(state.currentSubjectId);
-              if (s) {
-                renderCanvas();
-                renderResources(currentResTab);
-              } else {
-                // Subject was deleted on another device
-                renderDashboard();
-              }
+              getSubject(state.currentSubjectId)
+                ? (renderCanvas(), renderResources(currentResTab))
+                : renderDashboard();
             } else {
               renderDashboard();
             }
           },
           (err) => {
-            console.error("[Alumly] onSnapshot error:", err);
+            console.error("[Alumly] onSnapshot:", err);
             _showSyncBadge("error");
-          }
+          },
         );
       }
 
-      /* ── Sync badge helper ── */
+      /* ── Unified save() — routes to guest or cloud ── */
+      function save() {
+        isGuestMode ? _guestSave() : scheduleCloudWrite();
+      }
+
+      /* ── Sync badge ── */
       let _syncBadgeTimer = null;
       function _showSyncBadge(status) {
         const badge = document.getElementById("sync-badge");
         if (!badge) return;
         clearTimeout(_syncBadgeTimer);
-        badge.className = `show ${status}`;
-        const dot  = badge.querySelector(".sync-dot");
+        badge.className = "show " + status;
         const text = badge.querySelector(".sync-text");
-        if (text) {
+        if (text)
           text.textContent =
-            status === "syncing" ? "Syncing…" :
-            status === "saved"   ? "Saved to cloud" :
-                                   "Sync error";
-        }
-        if (status !== "syncing") {
-          _syncBadgeTimer = setTimeout(() => {
-            badge.classList.remove("show");
-          }, 3000);
-        }
+            status === "syncing"
+              ? "Syncing…"
+              : status === "saved"
+                ? "Saved to cloud"
+                : status === "local"
+                  ? "Saved locally"
+                  : "Sync error";
+        if (status !== "syncing")
+          _syncBadgeTimer = setTimeout(
+            () => badge.classList.remove("show"),
+            3000,
+          );
       }
 
       /* ═══════════════════════════════════════════════════════════════
-   SECTION 1b — AUTHENTICATION
+   SECTION 1b — AUTHENTICATION  (Google + Guest)
 ═══════════════════════════════════════════════════════════════ */
 
-      /** Populate the sidebar user strip */
       function _renderUserStrip(user) {
         const strip = document.getElementById("sidebar-user-strip");
         if (!strip) return;
         strip.style.display = "flex";
-        const photo = user.photoURL || "";
-        const name  = user.displayName || user.email || "User";
-        strip.innerHTML = `
-          <img class="sidebar-avatar"
-               src="${photo}"
-               onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22><circle cx=%2214%22 cy=%2214%22 r=%2214%22 fill=%22%23232333%22/></svg>'"
-               alt="avatar" />
-          <span class="sidebar-username">${escHtml(name)}</span>
-          <button id="btn-signout" onclick="handleSignOut()">Sign out</button>
-        `;
-      }
-
-      /** Google sign-in */
-      async function handleSignIn() {
-        const gate = document.getElementById("auth-gate");
-        gate.classList.add("loading");
-        try {
-          await signInWithPopup(fbAuth, provider);
-          // onAuthStateChanged below handles the rest
-        } catch (err) {
-          console.error("[Alumly] Sign-in error:", err);
-          gate.classList.remove("loading");
-          if (err.code !== "auth/popup-closed-by-user") {
-            showToast("❌", "Sign-in failed — please try again", 4000);
-          }
+        if (isGuestMode) {
+          strip.innerHTML = `<svg width="20" height="20" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;color:var(--text-3)">
+               <circle cx="8" cy="5.5" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+               <path d="M2 13c0-2.5 2.5-4 6-4s6 1.5 6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+             </svg>
+             <span class="sidebar-username">Guest</span>
+             <span class="sidebar-guest-badge">Local</span>
+             <button id="btn-signout" onclick="handleSignOut()" title="Sign in with Google">Sign in</button>`;
+        } else {
+          const photo = user && user.photoURL ? user.photoURL : "";
+          const name = user ? user.displayName || user.email || "User" : "User";
+          strip.innerHTML = `<img class="sidebar-avatar" src="${photo}" onerror="this.style.display='none'" alt=""/>
+             <span class="sidebar-username">${escHtml(name)}</span>
+             <button id="btn-signout" onclick="handleSignOut()" title="Sign out">Sign out</button>`;
         }
       }
 
-      /** Sign out */
-      async function handleSignOut() {
-        if (unsubSnap) { unsubSnap(); unsubSnap = null; }
-        clearTimeout(syncTimer);
-        state = { subjects: [], currentSubjectId: null };
-        currentUser = null;
-        document.getElementById("app").classList.remove("ready");
-        document.getElementById("auth-gate").classList.remove("hidden", "loading");
-        await signOut(fbAuth);
+      async function handleSignIn() {
+        document.getElementById("auth-gate").classList.add("loading");
+        try {
+          await signInWithPopup(fbAuth, provider);
+        } catch (err) {
+          console.error("[Alumly] Sign-in error:", err);
+          document.getElementById("auth-gate").classList.remove("loading");
+          if (err.code !== "auth/popup-closed-by-user")
+            showToast("❌", "Sign-in failed — please try again", 4000);
+        }
       }
 
-      /* ── Central auth observer ── */
+      function handleGuestLogin() {
+        isGuestMode = true;
+        _guestLoad();
+        document.getElementById("auth-gate").classList.add("hidden");
+        document.getElementById("app").classList.add("ready");
+        _renderUserStrip(null);
+        renderDashboard();
+        _showSyncBadge("local");
+        showToast("👤", "Running as Guest — data saved locally only", 3500);
+      }
+
+      async function handleSignOut() {
+        if (unsubSnap) {
+          unsubSnap();
+          unsubSnap = null;
+        }
+        clearTimeout(syncTimer);
+        const wasGuest = isGuestMode;
+        state = { subjects: [], currentSubjectId: null };
+        isGuestMode = false;
+        currentUser = null;
+        document.getElementById("app").classList.remove("ready");
+        document
+          .getElementById("auth-gate")
+          .classList.remove("hidden", "loading");
+        const strip = document.getElementById("sidebar-user-strip");
+        if (strip) strip.style.display = "none";
+        if (!wasGuest) await signOut(fbAuth);
+      }
+
       onAuthStateChanged(fbAuth, async (user) => {
         if (user) {
+          isGuestMode = false;
           currentUser = user;
-
-          // 1. Fetch initial data synchronously before revealing the UI
-          //    (prevents a flash of empty dashboard)
           try {
             const snap = await getDoc(doc(fbDb, "users", user.uid));
-            if (snap.exists()) {
-              state.subjects = (snap.data().subjects || []).map(normalizeSubject);
-            }
+            if (snap.exists())
+              state.subjects = (snap.data().subjects || []).map(
+                normalizeSubject,
+              );
           } catch (err) {
-            console.error("[Alumly] Initial load error:", err);
+            console.error("[Alumly] Initial load:", err);
           }
-
-          // 2. Attach real-time listener for cross-device sync
           attachRealtimeListener(user.uid);
-
-          // 3. Reveal app, hide auth gate
           document.getElementById("auth-gate").classList.add("hidden");
           document.getElementById("app").classList.add("ready");
-
-          // 4. Render
           _renderUserStrip(user);
           renderDashboard();
-
-        } else {
-          // Signed out — show auth gate
+        } else if (!isGuestMode) {
           document.getElementById("app").classList.remove("ready");
-          document.getElementById("auth-gate").classList.remove("hidden", "loading");
+          document
+            .getElementById("auth-gate")
+            .classList.remove("hidden", "loading");
           const strip = document.getElementById("sidebar-user-strip");
           if (strip) strip.style.display = "none";
         }
       });
 
-      // Wire up the sign-in button
-      document.getElementById("btn-google-login")
+      document
+        .getElementById("btn-google-login")
         .addEventListener("click", handleSignIn);
+      document
+        .getElementById("btn-guest-login")
+        .addEventListener("click", handleGuestLogin);
 
       /* ═══════════════════════════════════════════════════════════════
    SECTION 2 — CAMERA / INFINITE CANVAS ENGINE  ← UNTOUCHED
@@ -2839,7 +3031,49 @@
       async function handleFileUpload(event) {
         const file = event.target.files[0];
         if (!file) return;
-        event.target.value = ""; // reset so same file can be re-selected
+        event.target.value = "";
+
+        /* Guest mode — Base64 fallback, no Firebase Storage */
+        if (isGuestMode) {
+          const s = getSubject(state.currentSubjectId);
+          if (!s) return;
+          const sizeMB = file.size / (1024 * 1024);
+          if (sizeMB > 4) {
+            showToast(
+              "⚠️",
+              `File is ${sizeMB.toFixed(1)} MB — guest limit is 4 MB. Sign in for up to 20 MB.`,
+              5000,
+            );
+            return;
+          }
+          const ext = file.name.split(".").pop().toLowerCase();
+          const type = _fileType(ext);
+          showToast("⏳", `Reading ${file.name}…`);
+          try {
+            const dataURL = await new Promise((res, rej) => {
+              const rdr = new FileReader();
+              rdr.onload = () => res(rdr.result);
+              rdr.onerror = () => rej(rdr.error);
+              rdr.readAsDataURL(file);
+            });
+            s.resources.push({
+              id: "res_" + Date.now(),
+              title: file.name,
+              type,
+              isFile: true,
+              ext,
+              sizeMB: +sizeMB.toFixed(2),
+              dataURL,
+              fav: false,
+            });
+            save();
+            renderResources(currentResTab);
+            showToast("✅", `"${file.name}" saved locally`);
+          } catch (e) {
+            showToast("❌", "Failed to read file");
+          }
+          return;
+        }
 
         if (!currentUser) {
           showToast("❌", "You must be signed in to upload files");
@@ -2852,16 +3086,20 @@
         const sizeMB = file.size / (1024 * 1024);
         // MAX_FILE_MB = 20 — no localStorage warning needed
         if (sizeMB > MAX_FILE_MB) {
-          showToast("⚠️", `File is ${sizeMB.toFixed(1)} MB — maximum is ${MAX_FILE_MB} MB`, 5000);
+          showToast(
+            "⚠️",
+            `File is ${sizeMB.toFixed(1)} MB — maximum is ${MAX_FILE_MB} MB`,
+            5000,
+          );
           return;
         }
 
-        const ext  = file.name.split(".").pop().toLowerCase();
+        const ext = file.name.split(".").pop().toLowerCase();
         const type = _fileType(ext);
 
         // Show progress UI
-        const progressWrap  = document.getElementById("upload-progress-wrap");
-        const progressFill  = document.getElementById("upload-progress-fill");
+        const progressWrap = document.getElementById("upload-progress-wrap");
+        const progressFill = document.getElementById("upload-progress-fill");
         const progressLabel = document.getElementById("upload-progress-label");
         progressWrap.classList.add("active");
         progressFill.style.width = "0%";
@@ -2869,34 +3107,36 @@
 
         try {
           // Sanitise filename and build storage path
-          const safeName  = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+          const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
           const storagePath = `uploads/${currentUser.uid}/${Date.now()}_${safeName}`;
-          const fileRef   = storageRef(fbStore, storagePath);
+          const fileRef = storageRef(fbStore, storagePath);
           const uploadTask = uploadBytesResumable(fileRef, file);
 
           const downloadURL = await new Promise((resolve, reject) => {
             uploadTask.on(
               "state_changed",
               (snapshot) => {
-                const pct = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                const pct =
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 progressFill.style.width = pct.toFixed(0) + "%";
                 progressLabel.textContent = `Uploading… ${pct.toFixed(0)}%`;
               },
               (err) => reject(err),
-              async () => resolve(await getDownloadURL(uploadTask.snapshot.ref)),
+              async () =>
+                resolve(await getDownloadURL(uploadTask.snapshot.ref)),
             );
           });
 
           const resource = {
-            id:          "res_" + Date.now(),
-            title:       file.name,
+            id: "res_" + Date.now(),
+            title: file.name,
             type,
-            isFile:      true,
+            isFile: true,
             ext,
-            sizeMB:      +sizeMB.toFixed(2),
-            downloadURL,          // ← Firebase Storage URL (replaces dataURL)
-            storagePath,          // keep for potential future deletion
-            fav:         false,
+            sizeMB: +sizeMB.toFixed(2),
+            downloadURL, // ← Firebase Storage URL (replaces dataURL)
+            storagePath, // keep for potential future deletion
+            fav: false,
           };
           s.resources.push(resource);
           save();
@@ -2904,7 +3144,11 @@
           showToast("✅", `"${file.name}" uploaded`);
         } catch (err) {
           console.error("[Alumly] Upload error:", err);
-          showToast("❌", "Upload failed — " + (err.message || "unknown error"), 4000);
+          showToast(
+            "❌",
+            "Upload failed — " + (err.message || "unknown error"),
+            4000,
+          );
         } finally {
           progressWrap.classList.remove("active");
         }
@@ -3597,24 +3841,50 @@
       Object.assign(window, {
         // Auth
         handleSignOut,
+        handleGuestLogin,
         // Canvas / Notes
-        addNote, addNoteAt,
-        renderDashboard, openSubject,
-        toggleConnectMode, handleNoteConnect,
-        changeNoteColor, deleteNote, clearCanvas, _confirmClear,
-        resetView, updateConnections, deleteConnection,
+        addNote,
+        addNoteAt,
+        renderDashboard,
+        openSubject,
+        toggleConnectMode,
+        handleNoteConnect,
+        changeNoteColor,
+        deleteNote,
+        clearCanvas,
+        _confirmClear,
+        resetView,
+        updateConnections,
+        deleteConnection,
         // Resources
-        triggerFileUpload, handleFileUpload, openFileUrl,
-        switchResTab, toggleAddRes, selResType,
-        saveResource, deleteResource, toggleFav, previewFile,
+        triggerFileUpload,
+        handleFileUpload,
+        openFileUrl,
+        switchResTab,
+        toggleAddRes,
+        selResType,
+        saveResource,
+        deleteResource,
+        toggleFav,
+        previewFile,
         // Export / Import
-        exportSubject, triggerImport,
+        exportSubject,
+        triggerImport,
         // Subject modals
-        openAddSubjectModal, openEditSubjectModal, deleteSubjectPrompt,
-        selSwatch, togglePriorityEl,
-        _confirmAddSubject, _confirmEditSubject, _confirmDeleteSubject,
+        openAddSubjectModal,
+        openEditSubjectModal,
+        deleteSubjectPrompt,
+        selSwatch,
+        togglePriorityEl,
+        _confirmAddSubject,
+        _confirmEditSubject,
+        _confirmDeleteSubject,
         // UI utilities
-        showModal, closeModal, showCtxMenu, closeCtxMenu, showToast,
+        showModal,
+        closeModal,
+        showCtxMenu,
+        closeCtxMenu,
+        showToast,
       });
 
       /* ═══════════════════════════════════════════════════════════════
