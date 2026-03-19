@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alumly — Study Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ═══════════════════════════════════════
+     ROOT APP SHELL
+═══════════════════════════════════════ -->
+    <div id="app">
+      <!-- ── LEFT NAV SIDEBAR ── -->
+      <nav id="nav-sidebar">
+        <div class="nav-logo">
+          <span class="nav-logo-dot"></span>
+          Alumly
+        </div>
+
+        <div class="nav-section-label">Subjects</div>
+        <div id="nav-subject-list"></div>
+
+        <button class="nav-add-btn" id="btn-add-subject">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path
+              d="M7 1v12M1 7h12"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+          </svg>
+          New Subject
+        </button>
+
+        <div class="nav-footer">
+          <button
+            class="nav-footer-btn"
+            id="btn-theme-toggle"
+            title="Toggle theme"
+          >
+            <span id="theme-icon">☀</span>
+          </button>
+          <button
+            class="nav-footer-btn"
+            id="btn-export-all"
+            title="Export all data"
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M7 1v8M4 6l3 3 3-3M1 11h12"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+          <button class="nav-footer-btn" id="btn-import" title="Import backup">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M7 9V1M4 4l3-3 3 3M1 11h12"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- User strip — populated by JS after auth -->
+        <div id="nav-user-strip"></div>
+      </nav>
+
+      <!-- ── MAIN CONTENT AREA ── -->
+      <div id="main-area">
+        <!-- DASHBOARD VIEW -->
+        <div id="view-dashboard" class="view active">
+          <div class="dashboard-topbar">
+            <div class="dashboard-greeting" id="dashboard-greeting">
+              Good morning
+            </div>
+            <div class="dashboard-topbar-right">
+              <button class="topbar-btn primary" id="btn-dashboard-new-subject">
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M7 1v12M1 7h12"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                New Subject
+              </button>
+            </div>
+          </div>
+          <div id="dashboard-content"></div>
+        </div>
+
+        <!-- WORKSPACE VIEW -->
+        <div id="view-workspace" class="view">
+          <!-- Workspace top bar -->
+          <div id="workspace-topbar">
+            <button class="ws-back-btn" id="btn-back-to-dashboard">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M10 3L5 8l5 5"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              Dashboard
+            </button>
+            <div id="ws-subject-title" class="ws-subject-title"></div>
+            <div class="ws-topbar-tabs" id="ws-tabs">
+              <button class="ws-tab active" data-tab="canvas">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                  <rect
+                    x="2"
+                    y="2"
+                    width="5"
+                    height="5"
+                    rx="1.5"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  />
+                  <rect
+                    x="9"
+                    y="2"
+                    width="5"
+                    height="5"
+                    rx="1.5"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  />
+                  <rect
+                    x="2"
+                    y="9"
+                    width="5"
+                    height="5"
+                    rx="1.5"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  />
+                  <rect
+                    x="9"
+                    y="9"
+                    width="5"
+                    height="5"
+                    rx="1.5"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  />
+                </svg>
+                Canvas
+              </button>
+              <button class="ws-tab" data-tab="notes">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                  <path
+                    d="M3 4h10M3 8h7M3 12h5"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Notes
+              </button>
+              <button class="ws-tab" data-tab="resources">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                  <path
+                    d="M3 2h7l3 3v9H3V2z"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M10 2v4h4"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                Resources
+              </button>
+            </div>
+            <div class="ws-topbar-actions">
+              <button class="topbar-btn ghost" id="btn-ws-export">
+                Export
+              </button>
+            </div>
+          </div>
+
+          <!-- CANVAS TAB -->
+          <div id="tab-canvas" class="ws-tab-panel active">
+            <div id="canvas-panel">
+              <!-- dot grid bg is CSS -->
+              <div id="canvas-world">
+                <svg id="conn-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+              </div>
+
+              <!-- Empty state -->
+              <div id="canvas-empty-state" class="canvas-empty">
+                <div class="canvas-empty-icon">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                    <rect
+                      x="6"
+                      y="6"
+                      width="14"
+                      height="14"
+                      rx="3"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      opacity=".35"
+                    />
+                    <rect
+                      x="28"
+                      y="6"
+                      width="14"
+                      height="14"
+                      rx="3"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      opacity=".35"
+                    />
+                    <rect
+                      x="6"
+                      y="28"
+                      width="14"
+                      height="14"
+                      rx="3"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      opacity=".35"
+                    />
+                    <rect
+                      x="28"
+                      y="28"
+                      width="14"
+                      height="14"
+                      rx="3"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      opacity=".35"
+                    />
+                  </svg>
+                </div>
+                <p>Your canvas is empty</p>
+                <small
+                  >Press <kbd>N</kbd> or click <strong>+ Block</strong> to
+                  start</small
+                >
+              </div>
+
+              <!-- Connection mode hint -->
+              <div id="conn-mode-hint" class="conn-hint" style="display: none">
+                Click a block to start a connection, then click another ·
+                <strong>Esc</strong> to cancel
+              </div>
+
+              <!-- Canvas HUD -->
+              <div class="canvas-hud">
+                <button class="hud-btn accent" id="btn-add-note">
+                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                    <path
+                      d="M7 1v12M1 7h12"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  Block
+                </button>
+                <div class="hud-sep"></div>
+                <button
+                  class="hud-btn"
+                  id="btn-connect-mode"
+                  title="Connect blocks"
+                >
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                    <circle
+                      cx="3"
+                      cy="7"
+                      r="2"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                    />
+                    <circle
+                      cx="11"
+                      cy="7"
+                      r="2"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                    />
+                    <path
+                      d="M5 7h4"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  Connect
+                </button>
+                <div class="hud-sep"></div>
+                <button class="hud-btn" id="btn-reset-view" title="Reset view">
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                    <circle
+                      cx="7"
+                      cy="7"
+                      r="5"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                    />
+                    <circle cx="7" cy="7" r="1.5" fill="currentColor" />
+                  </svg>
+                </button>
+                <span class="hud-zoom" id="zoom-display">100%</span>
+                <div class="hud-sep"></div>
+                <button
+                  class="hud-btn hud-danger"
+                  id="btn-clear-canvas"
+                  title="Clear canvas"
+                >
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                    <path
+                      d="M2 4h10M5 4V2.5h4V4M5.5 6.5v4M8.5 6.5v4M3 4l1 8h6l1-8"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Keyboard hints -->
+              <div class="canvas-kbd-hints">
+                <span class="kbd-hint"><kbd>Space</kbd> + drag = Pan</span>
+                <span class="kbd-hint"><kbd>Ctrl</kbd> + scroll = Zoom</span>
+                <span class="kbd-hint"><kbd>N</kbd> = New block</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- NOTES TAB -->
+          <div id="tab-notes" class="ws-tab-panel">
+            <div class="notes-panel">
+              <div class="notes-panel-header">
+                <div class="notes-header-left">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path
+                      d="M3 4h10M3 8h7M3 12h5"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  <span>Quick Notes</span>
+                </div>
+                <span class="notes-autosave-badge" id="notes-save-badge"
+                  >Saved</span
+                >
+              </div>
+              <textarea
+                id="subject-notes-area"
+                class="notes-textarea"
+                placeholder="Write anything — ideas, summaries, questions, to-dos…&#10;&#10;This auto-saves as you type."
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- RESOURCES TAB -->
+          <div id="tab-resources" class="ws-tab-panel">
+            <div class="resources-panel">
+              <div class="res-panel-header">
+                <h3 class="res-panel-title">Resources</h3>
+                <div class="res-panel-actions">
+                  <button class="res-action-btn ghost" id="btn-upload-file">
+                    <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                      <path
+                        d="M7 9V1M4 4l3-3 3 3M1 11h12"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    Upload
+                  </button>
+                  <button class="res-action-btn accent" id="btn-add-link">
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                      <path
+                        d="M7 1v12M1 7h12"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                    Add Link
+                  </button>
+                </div>
+              </div>
+
+              <input
+                type="file"
+                id="file-input"
+                style="display: none"
+                accept=".pdf,.png,.jpg,.jpeg,.gif,.webp,.txt,.md,.mp4,.mov"
+              />
+
+              <!-- Upload progress (shown during Firebase Storage upload) -->
+              <div
+                id="res-upload-progress"
+                class="res-add-form"
+                style="display: none"
+              >
+                <div class="upload-progress-label">
+                  <span id="res-upload-name">Uploading…</span>
+                  <span id="res-upload-pct">0%</span>
+                </div>
+                <div class="upload-progress-bar-track">
+                  <div
+                    class="upload-progress-bar-fill"
+                    id="res-upload-bar"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- Add link form (hidden by default) -->
+              <div id="res-add-form" class="res-add-form" style="display: none">
+                <input
+                  class="res-form-input"
+                  id="res-link-title"
+                  placeholder="Title"
+                />
+                <input
+                  class="res-form-input"
+                  id="res-link-url"
+                  placeholder="URL"
+                />
+                <div class="res-form-type-row">
+                  <button class="res-type-btn active" data-type="link">
+                    🔗 Link
+                  </button>
+                  <button class="res-type-btn" data-type="video">
+                    ▶ Video
+                  </button>
+                  <button class="res-type-btn" data-type="doc">📄 Doc</button>
+                  <button class="res-type-btn" data-type="note">📝 Note</button>
+                </div>
+                <div class="res-form-btns">
+                  <button class="res-form-save" id="btn-save-link">Save</button>
+                  <button class="res-form-cancel" id="btn-cancel-link">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+
+              <div class="res-filter-bar" id="res-filter-bar">
+                <button class="res-filter-btn active" data-filter="all">
+                  All
+                </button>
+                <button class="res-filter-btn" data-filter="link">Links</button>
+                <button class="res-filter-btn" data-filter="pdf">PDF</button>
+                <button class="res-filter-btn" data-filter="image">
+                  Images
+                </button>
+                <button class="res-filter-btn" data-filter="video">
+                  Video
+                </button>
+              </div>
+
+              <div id="res-list" class="res-list"></div>
+            </div>
+          </div>
+        </div>
+        <!-- /view-workspace -->
+      </div>
+      <!-- /main-area -->
+    </div>
+    <!-- /app -->
+
+    <!-- Upload progress -->
+    <div id="upload-progress-wrap">
+      <div class="upload-progress-label">
+        <span id="upload-progress-name">Uploading…</span>
+        <span id="upload-progress-pct">0%</span>
+      </div>
+      <div class="upload-progress-bar-track">
+        <div class="upload-progress-bar-fill" id="upload-progress-bar"></div>
+      </div>
+    </div>
+
+    <!-- Cloud sync status badge -->
+    <div id="cloud-sync-badge">
+      <div class="sync-dot"></div>
+      <span id="sync-badge-text">Syncing…</span>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     MODALS & OVERLAYS
+═══════════════════════════════════════ -->
+    <div id="modal-mount"></div>
+    <div id="ctx-menu" style="display: none"></div>
+    <div id="toast-rack"></div>
+
+    <!-- Auth Gate — shown while checking / when signed out -->
+    <div id="auth-gate">
+      <div class="auth-card">
+        <div class="auth-logo">
+          <span class="nav-logo-dot"></span>
+          Alumly
+        </div>
+        <p class="auth-tagline">Your cloud-synced study hub</p>
+        <button class="auth-google-btn" id="btn-google-signin">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.64 9.2045C17.64 8.5663 17.5827 7.9527 17.4764 7.3636H9V10.845H13.8436C13.635 11.97 13.0009 12.9231 12.0477 13.5613V15.8195H14.9564C16.6582 14.2527 17.64 11.9454 17.64 9.2045Z"
+              fill="#4285F4"
+            />
+            <path
+              d="M9 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5613C11.2418 14.1013 10.2109 14.4204 9 14.4204C6.65591 14.4204 4.67182 12.8372 3.96409 10.71H0.957275V13.0418C2.43818 15.9831 5.48182 18 9 18Z"
+              fill="#34A853"
+            />
+            <path
+              d="M3.96409 10.71C3.78409 10.17 3.68182 9.5931 3.68182 9C3.68182 8.4068 3.78409 7.8299 3.96409 7.29V4.9581H0.957275C0.347727 6.1731 0 7.5477 0 9C0 10.4522 0.347727 11.8268 0.957275 13.0418L3.96409 10.71Z"
+              fill="#FBBC05"
+            />
+            <path
+              d="M9 3.5795C10.3214 3.5795 11.5077 4.0336 12.4405 4.9254L15.0218 2.344C13.4632 0.8918 11.4259 0 9 0C5.48182 0 2.43818 2.0168 0.957275 4.9581L3.96409 7.29C4.67182 5.1627 6.65591 3.5795 9 3.5795Z"
+              fill="#EA4335"
+            />
+          </svg>
+          Sign in with Google
+        </button>
+        <p class="auth-note">
+          Your data is private and synced across all your devices.
+        </p>
+      </div>
+    </div>
+
+    <!-- Icon picker modal template (inline, hidden) -->
+    <div id="icon-picker-data" style="display: none">
+      📘📗📙📕📓📔📒📃📄📑🗒🗓📅📆🗃📁📂🗂✏️🖊🖋📝🔬🔭🧬🧪🧫🧲💡🔦🕯🏺🔭🌍🌎🌏🌐🗺🧭🏔🌋🏕🌊🏖🌅🌆🌇🌃🌉🎓🎒🏫🏛🏗🔧🔨⚙️🛠🔩⚗️🧰💊🩺🏋️‍♀️🎯🎲♟🎮🎨🖼🎭🎬🎤🎸🎹🎺🥁🎻🏆🥇🎖🏅🎗📊📈📉🗃🗄🗑💼📋📌📍🖇📎🖊🖋✒️🔖🏷💰💳🏦⚖️🔐🔑🗝🔒🛡
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     FIREBASE v10 CDN + APP MODULE
+     Order matters: Firebase first, then our app.
+     All three files share the same ES module scope
+     via window.alumlyFirebase set in script.js.
+═══════════════════════════════════════ -->
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
