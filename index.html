@@ -4572,7 +4572,7 @@
         document.getElementById("topbar-actions").innerHTML = `
     <div id="sync-badge"><span class="sync-dot"></span><span class="sync-text"></span></div>
     ${themeToggleButtonHtml()}
-    <button class="btn" onclick="triggerImport()">⬆ Import</button>
+    <button class="btn" onclick="triggerImport()">⬇ Import</button>
     <button class="btn active" onclick="openAddSubjectModal()">＋ New Subject</button>
   `;
         renderSidebar();
@@ -4703,8 +4703,7 @@
     <div id="sync-badge"><span class="sync-dot"></span><span class="sync-text"></span></div>
     ${themeToggleButtonHtml()}
     <button class="btn header-resource-btn" onclick="openResourcesOverlay()">📚 Resources</button>
-    <button class="btn accent" onclick="exportSubjectReportPdf()">⬇ Report</button>
-    <button class="btn accent" onclick="exportSubject()">⬇ Export</button>
+    <button class="btn accent" onclick="exportSubject()">⬆ Export</button>
     <button class="btn active">Distraction-Free Workspace</button>
   `;
 
@@ -4926,6 +4925,7 @@
       </label>
     </div>
     <div class="modal-footer">
+      <button class="btn-cancel" style="color:var(--danger);border-color:color-mix(in srgb, var(--danger) 32%, var(--border));" onclick="deleteSubjectPrompt('${id}')">Delete Subject</button>
       <button class="btn-cancel" onclick="closeModal()">Cancel</button>
       <button class="btn-confirm" onclick="_confirmEditSubject('${id}')">Save</button>
     </div>
