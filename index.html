@@ -1087,6 +1087,21 @@
         font-weight: 700;
         min-width: 112px;
       }
+      .hud-btn.save-canvas {
+        min-width: 138px;
+        background: color-mix(in srgb, var(--green) 22%, transparent);
+        color: var(--green);
+        border: 1px solid color-mix(in srgb, var(--green) 35%, transparent);
+      }
+      .hud-btn.save-canvas.pending {
+        background: linear-gradient(180deg, rgba(200, 245, 100, 0.24), rgba(200, 245, 100, 0.16));
+        color: #efffbc;
+        border-color: color-mix(in srgb, var(--green) 62%, transparent);
+        box-shadow: 0 0 0 1px rgba(200, 245, 100, 0.12) inset;
+      }
+      [data-theme="light"] .hud-btn.save-canvas.pending {
+        color: #2e4c04;
+      }
       .hud-btn.primary:hover {
         background: var(--accent-dark);
       }
@@ -1108,6 +1123,24 @@
         min-width: 40px;
         text-align: center;
         font-variant-numeric: tabular-nums;
+      }
+      .canvas-save-status {
+        position: absolute;
+        bottom: 76px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--bg-card) 78%, transparent);
+        border: 1px solid var(--border);
+        color: var(--text-3);
+        font-size: 11.5px;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        z-index: 18;
       }
       .canvas-empty {
         position: absolute;
@@ -2510,6 +2543,10 @@
               them. Press <strong>Esc</strong> to cancel.
             </div>
 
+            <div class="canvas-save-status" id="canvas-save-status">
+              Canvas is saved.
+            </div>
+
             <!-- HUD toolbar -->
             <div class="canvas-hud">
               <button class="hud-btn primary" onclick="addNote()">
@@ -2540,6 +2577,15 @@
                 title="Clear canvas"
               >
                 🗑
+              </button>
+              <div class="hud-divider"></div>
+              <button
+                class="hud-btn save-canvas"
+                id="canvas-save-btn"
+                onclick="finishAndSaveCanvas()"
+                title="Save canvas changes"
+              >
+                Finish & Save
               </button>
             </div>
           </div>
@@ -2656,6 +2702,8 @@
       let activeResourceFilter = "all";
       let reopenResourcesOverlayAfterSave = false;
       let resourceFocusMode = false;
+      let dirtyCanvasSubjectIds = new Set();
+      const persistedCanvasBySubject = new Map();
       const THEME_KEY = "alumly_theme_v1";
       const LOCAL_BACKUP_KEY = "alumly_local_backup_v1";
       let currentTheme = localStorage.getItem(THEME_KEY) || "dark";
@@ -2734,13 +2782,98 @@
         return state.subjects.find((s) => s.id === id) ?? null;
       }
 
-      function persistLocalBackup() {
+      function canvasSnapshotForSubject(subject) {
+        return {
+          notes: JSON.parse(JSON.stringify(subject.notes || [])),
+          connections: JSON.parse(JSON.stringify(subject.connections || [])),
+          viewport: {
+            scale: subject.viewport?.scale ?? 1,
+            ox: subject.viewport?.ox ?? 0,
+            oy: subject.viewport?.oy ?? 0,
+          },
+        };
+      }
+
+      function syncPersistedCanvasSubjects(subjects = state.subjects) {
+        const activeIds = new Set((subjects || []).map((subject) => subject.id));
+        (subjects || []).forEach((subject) => {
+          persistedCanvasBySubject.set(
+            subject.id,
+            canvasSnapshotForSubject(subject),
+          );
+        });
+        Array.from(persistedCanvasBySubject.keys()).forEach((id) => {
+          if (!activeIds.has(id)) persistedCanvasBySubject.delete(id);
+        });
+      }
+
+      function getPersistableSubjects(persistCanvasIds = []) {
+        const allowedCanvasIds = new Set(persistCanvasIds);
+        return state.subjects.map((subject) => {
+          if (
+            !dirtyCanvasSubjectIds.has(subject.id) ||
+            allowedCanvasIds.has(subject.id)
+          ) {
+            return subject;
+          }
+          const snapshot =
+            persistedCanvasBySubject.get(subject.id) ||
+            canvasSnapshotForSubject({ notes: [], connections: [], viewport: {} });
+          return {
+            ...subject,
+            notes: snapshot.notes,
+            connections: snapshot.connections,
+            viewport: snapshot.viewport,
+          };
+        });
+      }
+
+      function updateCanvasSaveUi() {
+        const btn = document.getElementById("canvas-save-btn");
+        const status = document.getElementById("canvas-save-status");
+        const hasDirtyCanvas =
+          !!state.currentSubjectId && dirtyCanvasSubjectIds.has(state.currentSubjectId);
+        if (btn) {
+          btn.classList.toggle("pending", hasDirtyCanvas);
+          btn.textContent = "Finish & Save";
+        }
+        if (status) {
+          status.textContent = hasDirtyCanvas
+            ? "Canvas changes are only local until you save."
+            : "Canvas is saved.";
+        }
+      }
+
+      function markCanvasDirty(subjectId = state.currentSubjectId) {
+        if (!subjectId) return;
+        dirtyCanvasSubjectIds.add(subjectId);
+        updateCanvasSaveUi();
+      }
+
+      function finishAndSaveCanvas() {
+        const subjectId = state.currentSubjectId;
+        if (!subjectId) return;
+        if (!dirtyCanvasSubjectIds.has(subjectId)) {
+          showToast("💾", "Canvas is already saved");
+          return;
+        }
+        save({ persistCanvasIds: [subjectId] });
+        persistedCanvasBySubject.set(
+          subjectId,
+          canvasSnapshotForSubject(getSubject(subjectId) || {}),
+        );
+        dirtyCanvasSubjectIds.delete(subjectId);
+        updateCanvasSaveUi();
+        showToast("✅", "Canvas saved");
+      }
+
+      function persistLocalBackup(subjects = getPersistableSubjects()) {
         try {
           localStorage.setItem(
             LOCAL_BACKUP_KEY,
             JSON.stringify({
               savedAt: Date.now(),
-              subjects: state.subjects,
+              subjects,
             }),
           );
         } catch (e) {
@@ -2769,14 +2902,16 @@
         const backup = loadLocalBackup();
         if (!backup || !backup.subjects.length) return false;
         state.subjects = backup.subjects;
+        dirtyCanvasSubjectIds.clear();
+        syncPersistedCanvasSubjects();
         showToast("💾", reason, 3500);
         return true;
       }
 
       /* ── Guest persistence (localStorage) ── */
-      function _guestSave() {
+      function _guestSave(subjects = getPersistableSubjects()) {
         try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state.subjects));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(subjects));
           _showSyncBadge("local");
         } catch (e) {
           showToast("⚠️", "Local storage full — export your data", 4000);
@@ -2785,21 +2920,25 @@
       function _guestLoad() {
         try {
           const raw = localStorage.getItem(STORAGE_KEY);
-          if (raw) state.subjects = JSON.parse(raw).map(normalizeSubject);
+          if (raw) {
+            state.subjects = JSON.parse(raw).map(normalizeSubject);
+            dirtyCanvasSubjectIds.clear();
+            syncPersistedCanvasSubjects();
+          }
         } catch (e) {
           /* start fresh */
         }
       }
 
       /* ── Cloud persistence (Firestore) ── */
-      function scheduleCloudWrite() {
+      function scheduleCloudWrite(subjects = getPersistableSubjects()) {
         clearTimeout(syncTimer);
         _showSyncBadge("syncing");
         syncTimer = setTimeout(async () => {
           if (!currentUser) return;
           try {
             const ref = doc(fbDb, "users", currentUser.uid);
-            await setDoc(ref, { subjects: state.subjects }, { merge: false });
+            await setDoc(ref, { subjects }, { merge: false });
             _showSyncBadge("saved");
           } catch (err) {
             console.error("[Alumly] Firestore write:", err);
@@ -2816,7 +2955,9 @@
           (snap) => {
             if (!snap.exists()) return;
             state.subjects = (snap.data().subjects || []).map(normalizeSubject);
-            persistLocalBackup();
+            dirtyCanvasSubjectIds.clear();
+            syncPersistedCanvasSubjects();
+            persistLocalBackup(state.subjects);
             renderSidebar();
             if (state.currentSubjectId) {
               getSubject(state.currentSubjectId)
@@ -2834,9 +2975,10 @@
       }
 
       /* ── Unified save() — routes to guest or cloud ── */
-      function save() {
-        persistLocalBackup();
-        isGuestMode ? _guestSave() : scheduleCloudWrite();
+      function save(options = {}) {
+        const subjects = getPersistableSubjects(options.persistCanvasIds || []);
+        persistLocalBackup(subjects);
+        isGuestMode ? _guestSave(subjects) : scheduleCloudWrite(subjects);
       }
 
       /* ── Sync badge ── */
@@ -2922,6 +3064,8 @@
         clearTimeout(syncTimer);
         const wasGuest = isGuestMode;
         state = { subjects: [], currentSubjectId: null };
+        dirtyCanvasSubjectIds.clear();
+        persistedCanvasBySubject.clear();
         isGuestMode = false;
         currentUser = null;
         document.getElementById("app").classList.remove("ready");
@@ -2944,6 +3088,8 @@
               state.subjects = (snap.data().subjects || []).map(
                 normalizeSubject,
               );
+              dirtyCanvasSubjectIds.clear();
+              syncPersistedCanvasSubjects();
               loadedFromCloud = true;
             }
           } catch (err) {
@@ -2974,7 +3120,7 @@
       document
         .getElementById("btn-guest-login")
         .addEventListener("click", handleGuestLogin);
-      window.addEventListener("beforeunload", persistLocalBackup);
+      window.addEventListener("beforeunload", () => persistLocalBackup());
 
       /* ═══════════════════════════════════════════════════════════════
    SECTION 2 — CAMERA / INFINITE CANVAS ENGINE  ← UNTOUCHED
@@ -3032,7 +3178,7 @@
           this.ox = 0;
           this.oy = 0;
           this.apply();
-          save();
+          markCanvasDirty();
         },
 
         loadFrom(viewport) {
@@ -3072,7 +3218,7 @@
               e.clientY - rect.top,
               e.deltaY,
             );
-            save();
+            markCanvasDirty();
           },
           { passive: false },
         );
@@ -3118,7 +3264,7 @@
           if (pan.active) {
             pan.active = false;
             panel.classList.remove("panning");
-            save();
+            markCanvasDirty();
           }
           if (drag.active) {
             // persist final position
@@ -3139,7 +3285,7 @@
             if (el) el.classList.remove("dragging");
             drag.active = false;
             drag.noteId = null;
-            save();
+            markCanvasDirty();
           }
         });
 
@@ -3215,6 +3361,7 @@
         s.notes.forEach((n) => _mountNote(n));
         renderConnections();
         camera.loadFrom(s.viewport);
+        updateCanvasSaveUi();
       }
 
       function addNote() {
@@ -3242,7 +3389,7 @@
         s.notes.push(note);
         document.getElementById("canvas-empty").style.display = "none";
         _mountNote(note, true);
-        save();
+        markCanvasDirty();
       }
 
       function _mountNote(note, focusOnMount = false) {
@@ -3329,7 +3476,7 @@
         const n = s.notes.find((n) => n.id === id);
         if (n) {
           n.text = text;
-          save();
+          markCanvasDirty();
         }
       }
 
@@ -3345,7 +3492,7 @@
           el.style.setProperty("--note-color", color);
           el.querySelector(".note-bar").style.background = color;
         }
-        save();
+        markCanvasDirty();
       }
 
       function deleteNote(id) {
@@ -3366,7 +3513,7 @@
         if (!s.notes.length)
           document.getElementById("canvas-empty").style.display = "flex";
         renderConnections();
-        save();
+        markCanvasDirty();
       }
 
       function clearCanvas() {
@@ -3395,7 +3542,7 @@
         if (!s) return;
         s.notes = [];
         s.connections = [];
-        save();
+        markCanvasDirty();
         closeModal();
         document
           .getElementById("canvas-world")
@@ -3458,7 +3605,7 @@
             to: noteId,
           });
           renderConnections();
-          save();
+          markCanvasDirty();
           showToast("⟷", "Notes connected");
         } else {
           showToast("ℹ️", "Already connected");
@@ -3535,7 +3682,7 @@
         if (!s) return;
         s.connections = s.connections.filter((c) => c.id !== connId);
         renderConnections();
-        save();
+        markCanvasDirty();
         showToast("🗑", "Connection removed");
       }
 
@@ -4873,6 +5020,8 @@
 
       function _confirmDeleteSubject(id) {
         state.subjects = state.subjects.filter((s) => s.id !== id);
+        dirtyCanvasSubjectIds.delete(id);
+        persistedCanvasBySubject.delete(id);
         if (state.currentSubjectId === id) state.currentSubjectId = null;
         save();
         closeModal();
@@ -5000,6 +5149,7 @@
         // Canvas / Notes
         addNote,
         addNoteAt,
+        finishAndSaveCanvas,
         renderDashboard,
         openSubject,
         toggleConnectMode,
