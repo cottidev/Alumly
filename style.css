@@ -9,6 +9,7 @@
 ────────────────────────────────────────────────────────────── */
       :root {
         --bg: #08111f;
+        --bg-panel: #0b1424;
         --bg-elevated: #0d1728;
         --bg-card: #121d31;
         --bg-input: #101a2d;
@@ -90,6 +91,7 @@
 ────────────────────────────────────────────────────────────── */
       [data-theme="light"] {
         --bg: #f4f7fb;
+        --bg-panel: #f7f9fd;
         --bg-elevated: #fbfdff;
         --bg-card: #ffffff;
         --bg-input: #f5f8fc;
@@ -2240,6 +2242,18 @@
         background:
           linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent),
           var(--bg-panel);
+      }
+      [data-theme="light"] .focus-mode-active .resource-center-main {
+        background:
+          linear-gradient(180deg, rgba(63, 121, 216, 0.05), transparent 22%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(244, 247, 251, 0.98)),
+          var(--bg-panel);
+      }
+      [data-theme="light"] .focus-mode-active .resource-center-sidebar {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(247, 249, 253, 0.98)),
+          var(--bg-panel);
+        box-shadow: inset -1px 0 0 rgba(13, 29, 49, 0.05);
       }
       .focus-mode-active .resource-center-header {
         padding: 30px 34px 20px;
