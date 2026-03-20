@@ -2518,6 +2518,9 @@
             <div class="kbd-hint">
               <div class="kbd"><kbd>Space</kbd>+drag Pan</div>
               <div class="kbd"><kbd>Ctrl</kbd>+scroll Zoom</div>
+              <div class="kbd"><kbd>N</kbd> New note</div>
+              <div class="kbd"><kbd>R</kbd> Reset</div>
+              <div class="kbd"><kbd>W</kbd> Resources</div>
             </div>
 
             <!-- World transform wrapper -->
@@ -3311,14 +3314,35 @@
 
         // Space key
         document.addEventListener("keydown", (e) => {
+          const targetTag = e.target.tagName;
+          const isTypingTarget =
+            targetTag === "TEXTAREA" ||
+            targetTag === "INPUT" ||
+            e.target.isContentEditable;
           if (
             e.code === "Space" &&
-            e.target.tagName !== "TEXTAREA" &&
-            e.target.tagName !== "INPUT"
+            !isTypingTarget
           ) {
             e.preventDefault();
             spaceDown = true;
             if (!pan.active) panel.classList.add("pan-ready");
+          }
+          if (!isTypingTarget && state.currentSubjectId) {
+            if (e.key === "n" || e.key === "N") {
+              e.preventDefault();
+              addNote();
+              return;
+            }
+            if (e.key === "r" || e.key === "R") {
+              e.preventDefault();
+              resetView();
+              return;
+            }
+            if (e.key === "w" || e.key === "W") {
+              e.preventDefault();
+              openResourcesOverlay();
+              return;
+            }
           }
           if (e.key === "Escape") {
             closeModal();
