@@ -1638,11 +1638,15 @@
       }
 
       function handleNoteConnect(noteId) {
+        if (!connectMode.active) {
+          toggleConnectMode();
+        }
         if (!connectMode.active) return;
         if (!connectMode.fromId) {
           connectMode.fromId = noteId;
           const el = document.querySelector(`.note[data-id="${noteId}"]`);
           if (el) el.classList.add("connecting-source");
+          showToast("⟷", "Select another note to connect");
           return;
         }
         if (connectMode.fromId === noteId) {
