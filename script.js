@@ -2211,14 +2211,28 @@
         showToast("🗑", "Resource removed");
       }
 
+      function downloadBlobFile(blob, fileName) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 0);
+      }
+
       function performResourcePdfExport(item) {
         if (!item || item.type !== "note") return;
-        openPrintExportWindow({
-          title: item.title || "Untitled note",
-          subtitle: `Exported from Alumly App, ${fmtNoteDate(item.updatedAt)}`,
-          bodyHtml: `<div class="print-note-body">${escHtml(item.body || "Empty note").replace(/\n/g, "<br>")}</div>`,
-          fileName: `${slugifyFileName(item.title || "alumly-note")}.pdf`,
-        });
+        try {
+          const bytes = buildNotePdfBytes(item);
+          downloadBlobFile(
+            new Blob([bytes], { type: "application/pdf" }),
+            `${slugifyFileName(item.title || "alumly-note")}.pdf`,
+          );
+          showToast("📄", "PDF downloaded");
+        } catch (err) {
+          console.error("[Alumly] PDF export failed:", err);
+          showToast("❌", "PDF export failed");
+        }
       }
 
       function exportResourcePdf(id = activeResourceId) {
@@ -2563,12 +2577,10 @@
         const blob = new Blob([JSON.stringify(payload, null, 2)], {
           type: "application/json",
         });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `alumly-${s.name.replace(/\s+/g, "-").toLowerCase()}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
+        downloadBlobFile(
+          blob,
+          `alumly-${s.name.replace(/\s+/g, "-").toLowerCase()}.json`,
+        );
         showToast("⬇", `Subject "${s.name}" exported`);
       }
 
