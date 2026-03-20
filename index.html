@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alumly</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="shortcut icon" href="alumly_pic.png" type="image/x-icon" />
     <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap"
       rel="stylesheet"
@@ -66,12 +63,27 @@
         --shadow-note: 0 14px 32px rgba(0, 0, 0, 0.24);
         --font-body: "Manrope", sans-serif;
         --font-display: "Sora", sans-serif;
-        --surface-gradient:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
+        --surface-gradient: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.03),
+          transparent
+        );
         --backdrop-pattern:
-          radial-gradient(circle at top right, rgba(123, 176, 255, 0.12), transparent 30%),
-          radial-gradient(circle at left 16%, rgba(110, 214, 203, 0.08), transparent 22%),
-          radial-gradient(circle at 80% 85%, rgba(146, 160, 255, 0.08), transparent 22%);
+          radial-gradient(
+            circle at top right,
+            rgba(123, 176, 255, 0.12),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at left 16%,
+            rgba(110, 214, 203, 0.08),
+            transparent 22%
+          ),
+          radial-gradient(
+            circle at 80% 85%,
+            rgba(146, 160, 255, 0.08),
+            transparent 22%
+          );
         /* legacy aliases kept for JS-generated HTML */
         --surface: #0d1728;
         --surface2: #121d31;
@@ -123,9 +135,21 @@
         --accent4: #3f79d8;
         --danger: #d94f4f;
         --backdrop-pattern:
-          radial-gradient(circle at top right, rgba(63, 121, 216, 0.1), transparent 30%),
-          radial-gradient(circle at left 16%, rgba(110, 214, 203, 0.1), transparent 24%),
-          radial-gradient(circle at 80% 85%, rgba(146, 160, 255, 0.08), transparent 24%);
+          radial-gradient(
+            circle at top right,
+            rgba(63, 121, 216, 0.1),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at left 16%,
+            rgba(110, 214, 203, 0.1),
+            transparent 24%
+          ),
+          radial-gradient(
+            circle at 80% 85%,
+            rgba(146, 160, 255, 0.08),
+            transparent 24%
+          );
       }
 
       /* ──────────────────────────────────────────────────────────────
@@ -1124,7 +1148,11 @@
       #canvas-panel {
         position: relative;
         background:
-          radial-gradient(circle at top, rgba(138, 180, 255, 0.14), transparent 34%),
+          radial-gradient(
+            circle at top,
+            rgba(138, 180, 255, 0.14),
+            transparent 34%
+          ),
           linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 28%),
           var(--bg-panel);
       }
@@ -1135,9 +1163,17 @@
         pointer-events: none;
         background-image:
           linear-gradient(rgba(255, 255, 255, 0.034) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.034) 1px, transparent 1px);
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.034) 1px,
+            transparent 1px
+          );
         background-size: 34px 34px;
-        mask-image: radial-gradient(circle at center, black 44%, transparent 100%);
+        mask-image: radial-gradient(
+          circle at center,
+          black 44%,
+          transparent 100%
+        );
         opacity: 0.46;
       }
       [data-theme="light"] #canvas-panel::before {
@@ -3545,7 +3581,8 @@
           return;
         }
         try {
-          if (document.fullscreenElement === shell) await document.exitFullscreen();
+          if (document.fullscreenElement === shell)
+            await document.exitFullscreen();
           else await shell.requestFullscreen();
         } catch {
           showToast("❌", "Unable to switch fullscreen mode");
@@ -3596,7 +3633,10 @@
           activeResourceId = allResources[0].id;
         }
         let active = getActiveResource(s);
-        if (items.length && (!active || !items.find((item) => item.id === active.id))) {
+        if (
+          items.length &&
+          (!active || !items.find((item) => item.id === active.id))
+        ) {
           activeResourceId = items[0].id;
           active = getActiveResource(s);
         }
@@ -3977,10 +4017,12 @@
       }
 
       function slugifyFileName(value) {
-        return String(value)
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/^-+|-+$/g, "") || "alumly-note";
+        return (
+          String(value)
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "") || "alumly-note"
+        );
       }
 
       function pdfEscape(text) {
@@ -3992,7 +4034,9 @@
       }
 
       function wrapPdfText(text, maxChars = 86) {
-        const rawLines = String(text || "").replace(/\r/g, "").split("\n");
+        const rawLines = String(text || "")
+          .replace(/\r/g, "")
+          .split("\n");
         const wrapped = [];
         rawLines.forEach((line) => {
           const clean = line.trimEnd();
@@ -4034,7 +4078,9 @@
         objects.push("<< /Type /Catalog /Pages 2 0 R >>");
 
         const pageKids = pages.map((_, i) => `${3 + i * 2} 0 R`).join(" ");
-        objects.push(`<< /Type /Pages /Count ${pages.length} /Kids [${pageKids}] >>`);
+        objects.push(
+          `<< /Type /Pages /Count ${pages.length} /Kids [${pageKids}] >>`,
+        );
 
         pages.forEach((lines, index) => {
           const pageObjId = 3 + index * 2;
@@ -4075,7 +4121,9 @@
           }
 
           const stream = textCommands.join("\n");
-          objects.push(`<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`);
+          objects.push(
+            `<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`,
+          );
         });
 
         let pdf = "%PDF-1.4\n";
@@ -4239,7 +4287,10 @@
         const s = getSubject(state.currentSubjectId);
         if (!s) return;
         const summaryItems = [
-          { label: "Exam Date", value: s.examDate ? fmtDate(s.examDate) : "Not set" },
+          {
+            label: "Exam Date",
+            value: s.examDate ? fmtDate(s.examDate) : "Not set",
+          },
           { label: "Priority", value: s.priority ? "Yes" : "No" },
           { label: "Completed", value: s.isCompleted ? "Yes" : "No" },
           { label: "Canvas Notes", value: String(s.notes.length) },
@@ -4615,7 +4666,8 @@
         const month = monthEl.value;
         const year = yearEl.value;
         if (refreshDays) {
-          const maxDay = month && year ? daysInMonth(Number(month), Number(year)) : 31;
+          const maxDay =
+            month && year ? daysInMonth(Number(month), Number(year)) : 31;
           const currentDay = dayEl.value;
           dayEl.innerHTML =
             `<option value="">Day</option>` +
