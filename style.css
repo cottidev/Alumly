@@ -1267,7 +1267,7 @@
       }
       .canvas-save-status {
         position: absolute;
-        bottom: 76px;
+        bottom: 90px;
         left: 50%;
         transform: translateX(-50%);
         padding: 8px 12px;
