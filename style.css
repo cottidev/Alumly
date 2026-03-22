@@ -1667,12 +1667,14 @@
         padding-bottom: 2px;
       }
       .resource-card {
-        min-width: 220px;
-        max-width: 270px;
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+        flex: 0 0 auto;
         background: var(--surface-gradient), var(--bg-card);
         border: 1px solid var(--border);
-        border-radius: 20px;
-        padding: 16px;
+        border-radius: 18px;
+        padding: 12px 14px;
         transition:
           border-color 0.15s,
           transform 0.15s,
@@ -1701,7 +1703,12 @@
       .resource-card-row {
         display: flex;
         align-items: flex-start;
-        gap: 10px;
+        gap: 12px;
+        min-width: 0;
+      }
+      .resource-card-main {
+        flex: 1;
+        min-width: 0;
       }
       .resource-card-type {
         width: 34px;
@@ -1728,40 +1735,25 @@
         font-size: 14px;
         font-weight: 700;
         color: var(--text);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .resource-card-meta {
         margin-top: 4px;
         font-size: 11px;
         color: var(--text-3);
       }
-      .resource-card-preview {
-        margin-top: 8px;
-        font-size: 12.5px;
-        line-height: 1.55;
-        color: var(--text-2);
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-        overflow: hidden;
-      }
-      .resource-card-footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        margin-top: 12px;
-      }
-      .resource-card-date {
-        font-size: 10.5px;
-        color: var(--text-3);
-      }
       .resource-card-actions {
         display: flex;
-        gap: 4px;
+        align-items: center;
+        gap: 3px;
+        margin-left: 6px;
+        flex-shrink: 0;
       }
       .resource-card-action {
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
         border-radius: 9px;
         background: transparent;
         color: var(--text-3);
@@ -1903,6 +1895,7 @@
         max-height: 94vh;
         padding: 0;
         overflow: hidden;
+        display: flex;
       }
       @keyframes slideUp {
         from {
@@ -2059,6 +2052,7 @@
         grid-template-columns: 320px minmax(0, 1fr);
         height: 100%;
         min-height: 0;
+        overflow: hidden;
       }
       .resource-center-sidebar {
         border-right: 1px solid var(--border);
@@ -2069,12 +2063,23 @@
         display: flex;
         flex-direction: column;
         gap: 18px;
+        height: 100%;
+        max-height: 100%;
         min-height: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-gutter: stable;
+      }
+      .resource-center-sidebar > * {
+        flex: 0 0 auto;
       }
       .resource-center-main {
+        height: 100%;
         min-height: 0;
         display: flex;
         flex-direction: column;
+        overflow: hidden;
         background:
           linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent),
           var(--bg);
@@ -2109,12 +2114,10 @@
         flex-wrap: wrap;
       }
       .resource-list-scroll {
-        min-height: 0;
-        overflow-y: auto;
         display: flex;
         flex-direction: column;
         gap: 10px;
-        padding-right: 4px;
+        padding-bottom: 10px;
       }
       .resource-detail {
         flex: 1;
