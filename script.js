@@ -1987,23 +1987,15 @@
 
       function resourceCardHtml(item, color) {
         const meta = resourceTypeMeta(item.type);
-        const preview =
-          item.type === "note"
-            ? item.body || "Open to write your note"
-            : item.url || "Open this resource";
         return `
           <div class="resource-card ${item.id === activeResourceId ? "active" : ""}" style="--subject-color:${color}"
             onclick="openResource('${item.id}')">
             <div class="resource-card-row">
               <div class="resource-card-type">${meta.icon}</div>
-              <div style="flex:1;min-width:0;">
+              <div class="resource-card-main">
                 <div class="resource-card-title">${escHtml(item.title || meta.label)}</div>
                 <div class="resource-card-meta">${meta.label}${item.pinned ? " • Pinned" : ""}</div>
               </div>
-            </div>
-            <div class="resource-card-preview">${escHtml(preview)}</div>
-            <div class="resource-card-footer">
-              <div class="resource-card-date">${fmtNoteDate(item.updatedAt)}</div>
               <div class="resource-card-actions">
                 <button class="resource-card-action ${item.pinned ? "active" : ""}" onclick="event.stopPropagation();toggleResourcePin('${item.id}')" title="Pin">★</button>
                 <button class="resource-card-action" onclick="event.stopPropagation();openEditResourceModal('${item.id}')" title="Edit">✎</button>
