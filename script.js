@@ -106,6 +106,9 @@
       let canvasClipboard = null;
       let canvasEventsInitialized = false;
       let canvasFocusMode = false;
+      let draggedSubjectId = null;
+      let draggedSubjectDropIndex = null;
+      let suppressSubjectCardClick = false;
       const canvasHistory = new Map();
       let dirtyCanvasSubjectIds = new Set();
       const persistedCanvasBySubject = new Map();
@@ -131,6 +134,7 @@
           isRunning: false,
           endTime: null,
           completedWorkSessions: 0,
+          totalFocusMinutes: 0,
         };
       }
 
@@ -193,6 +197,11 @@
           isRunning: hasExpiredRun || (!!endTime && !!raw.isRunning),
           endTime,
           completedWorkSessions: Math.max(0, Number(raw.completedWorkSessions) || 0),
+          totalFocusMinutes: Math.max(
+            0,
+            Number(raw.totalFocusMinutes) ||
+              (Math.max(0, Number(raw.focusSessionPoints) || 0) * 25),
+          ),
         };
       }
 
@@ -783,6 +792,11 @@
         return remainder === 0 ? 4 : 4 - remainder;
       }
 
+      function formatFocusMinutes(minutes) {
+        const safeMinutes = Math.max(0, Number(minutes) || 0);
+        return `${safeMinutes} min`;
+      }
+
       function syncPomodoroDom() {
         const timer = normalizePomodoro(state.pomodoro);
         state.pomodoro = timer;
@@ -833,6 +847,7 @@
         const timer = state.pomodoro;
         if (timer.mode === "work") {
           timer.completedWorkSessions += 1;
+          timer.totalFocusMinutes += Math.max(0, Number(timer.workMinutes) || 0);
           timer.mode =
             timer.completedWorkSessions % 4 === 0 ? "longBreak" : "shortBreak";
           timer.remainingMs = getPomodoroDurationMs(timer.mode);
@@ -888,7 +903,6 @@
         state.pomodoro.endTime = null;
         state.pomodoro.remainingMs = getPomodoroDurationMs(state.pomodoro.mode);
         ensurePomodoroTicker();
-        save();
       }
 
       function setPomodoroMode(mode) {
@@ -898,7 +912,6 @@
         state.pomodoro.endTime = null;
         state.pomodoro.remainingMs = getPomodoroDurationMs(mode);
         ensurePomodoroTicker();
-        save();
       }
 
       function togglePomodoro() {
@@ -914,9 +927,9 @@
           );
           timer.isRunning = true;
           timer.endTime = Date.now() + timer.remainingMs;
+          save();
         }
         ensurePomodoroTicker();
-        save();
       }
 
       function resetPomodoro() {
@@ -924,7 +937,6 @@
         state.pomodoro.endTime = null;
         state.pomodoro.remainingMs = getPomodoroDurationMs(state.pomodoro.mode);
         ensurePomodoroTicker();
-        save();
       }
 
       function pomodoroTriggerHtml() {
@@ -2634,6 +2646,203 @@
           .join("");
       }
 
+      function getNextExamSubject() {
+        return state.subjects
+          .filter((subject) => !subject.isCompleted && subject.examDate)
+          .map((subject) => ({ subject, days: daysUntil(subject.examDate) }))
+          .filter(({ days }) => days != null && days >= 0)
+          .sort((a, b) => a.days - b.days)[0] || null;
+      }
+
+      function getPrioritySubjects() {
+        return state.subjects
+          .filter((subject) => subject.priority && !subject.isCompleted)
+          .sort((a, b) => {
+            const aDays = daysUntil(a.examDate);
+            const bDays = daysUntil(b.examDate);
+            if (aDays == null && bDays == null) return a.name.localeCompare(b.name);
+            if (aDays == null) return 1;
+            if (bDays == null) return -1;
+            return aDays - bDays;
+          });
+      }
+
+      function moveSubjectToIndex(subjectId, targetIndex) {
+        const currentIndex = state.subjects.findIndex((subject) => subject.id === subjectId);
+        if (currentIndex === -1) return false;
+        const boundedIndex = Math.max(0, Math.min(targetIndex, state.subjects.length));
+        const adjustedIndex =
+          boundedIndex > currentIndex ? boundedIndex - 1 : boundedIndex;
+        if (currentIndex === adjustedIndex) return false;
+        const [moved] = state.subjects.splice(currentIndex, 1);
+        state.subjects.splice(adjustedIndex, 0, moved);
+        return true;
+      }
+
+      function handleSubjectCardClick(event, subjectId) {
+        if (suppressSubjectCardClick || draggedSubjectId) {
+          event.preventDefault();
+          return;
+        }
+        openSubject(subjectId);
+      }
+
+      function handleSubjectCardDragStart(event, subjectId) {
+        draggedSubjectId = subjectId;
+        draggedSubjectDropIndex = state.subjects.findIndex((subject) => subject.id === subjectId);
+        suppressSubjectCardClick = false;
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", subjectId);
+        event.currentTarget.classList.add("dragging");
+      }
+
+      function clearSubjectDropPreview() {
+        document.querySelectorAll(".subject-card.drop-before, .subject-card.drop-after").forEach((card) => {
+          card.classList.remove("drop-before", "drop-after");
+        });
+      }
+
+      function previewSubjectDropIndex(dropIndex) {
+        clearSubjectDropPreview();
+        const cards = [
+          ...document.querySelectorAll(".subjects-grid .subject-card[data-subject-id]"),
+        ].filter((card) => card.dataset.subjectId !== draggedSubjectId);
+        if (!cards.length || dropIndex == null) return;
+        if (dropIndex >= cards.length) {
+          cards[cards.length - 1].classList.add("drop-after");
+          return;
+        }
+        const targetCard = cards[dropIndex];
+        if (targetCard) targetCard.classList.add("drop-before");
+      }
+
+      function getSubjectDropIndexFromPoint(clientX, clientY) {
+        const grid = document.getElementById("dashboard-subjects-grid");
+        if (!grid) return null;
+        const cards = [
+          ...grid.querySelectorAll(".subject-card[data-subject-id]"),
+        ].filter((card) => card.dataset.subjectId !== draggedSubjectId);
+        if (!cards.length) return 0;
+
+        const rows = [];
+        cards.forEach((card) => {
+          const rect = card.getBoundingClientRect();
+          const lastRow = rows[rows.length - 1];
+          if (!lastRow || Math.abs(lastRow.top - rect.top) > 24) {
+            rows.push({ top: rect.top, bottom: rect.bottom, cards: [{ card, rect }] });
+            return;
+          }
+          lastRow.bottom = Math.max(lastRow.bottom, rect.bottom);
+          lastRow.cards.push({ card, rect });
+        });
+
+        let targetRow = rows[rows.length - 1];
+        for (let index = 0; index < rows.length; index += 1) {
+          const row = rows[index];
+          const nextRow = rows[index + 1];
+          const boundary = nextRow
+            ? row.bottom + (nextRow.top - row.bottom) / 2
+            : Number.POSITIVE_INFINITY;
+          if (clientY < boundary) {
+            targetRow = row;
+            break;
+          }
+        }
+
+        for (const { card, rect } of targetRow.cards) {
+          if (clientX < rect.left + rect.width / 2) {
+            return cards.findIndex((candidate) => candidate === card);
+          }
+        }
+        const lastCard = targetRow.cards[targetRow.cards.length - 1]?.card;
+        const lastIndex = cards.findIndex((candidate) => candidate === lastCard);
+        return lastIndex + 1;
+      }
+
+      function handleSubjectGridDragOver(event) {
+        if (!draggedSubjectId) return;
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
+        draggedSubjectDropIndex = getSubjectDropIndexFromPoint(event.clientX, event.clientY);
+        previewSubjectDropIndex(draggedSubjectDropIndex);
+      }
+
+      function handleSubjectGridDrop(event) {
+        if (!draggedSubjectId) return;
+        event.preventDefault();
+        const dropIndex =
+          draggedSubjectDropIndex != null
+            ? draggedSubjectDropIndex
+            : getSubjectDropIndexFromPoint(event.clientX, event.clientY);
+        clearSubjectDropPreview();
+        const moved = moveSubjectToIndex(draggedSubjectId, dropIndex);
+        if (moved) {
+          suppressSubjectCardClick = true;
+          renderDashboard();
+          save();
+        }
+      }
+
+      function handleSubjectGridDragLeave(event) {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          clearSubjectDropPreview();
+        }
+      }
+
+      function handleSubjectCardDragEnd(event) {
+        event.currentTarget.classList.remove("dragging");
+        clearSubjectDropPreview();
+        draggedSubjectId = null;
+        draggedSubjectDropIndex = null;
+        window.setTimeout(() => {
+          suppressSubjectCardClick = false;
+        }, 0);
+      }
+
+      function openNextExamSubject() {
+        const nextExam = getNextExamSubject();
+        if (!nextExam) return;
+        openSubject(nextExam.subject.id);
+      }
+
+      function openPrioritySubjectsModal() {
+        const prioritySubjects = getPrioritySubjects();
+        if (!prioritySubjects.length) {
+          showToast("📌", "No priority subjects yet");
+          return;
+        }
+        showModal(`
+    <h2>Priority Subjects</h2>
+    <div class="modal-help">Jump straight into your highest-priority work.</div>
+    <div class="priority-list">
+      ${prioritySubjects
+        .map((subject) => {
+          const days = subject.examDate ? daysUntil(subject.examDate) : null;
+          const examMeta = subject.examDate
+            ? `${fmtDate(subject.examDate)}${days === 0 ? " • Today" : days != null ? ` • ${days}d` : ""}`
+            : "No exam date";
+          return `
+        <button class="priority-item" onclick="openPrioritySubject('${subject.id}')">
+          <div class="priority-item-icon" style="background:${subject.color}22;color:${subject.color}">${subject.emoji || "📘"}</div>
+          <div class="priority-item-copy">
+            <div class="priority-item-title">${escHtml(subject.name)}</div>
+            <div class="priority-item-meta">${examMeta}</div>
+          </div>
+          <div class="priority-item-arrow">→</div>
+        </button>`;
+        })
+        .join("")}
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Close</button>
+    </div>`);
+      }
+
+      function openPrioritySubject(subjectId) {
+        closeModal();
+        openSubject(subjectId);
+      }
+
       function renderDashboard() {
         if (document.getElementById("canvas-panel") && document.fullscreenElement === document.getElementById("canvas-panel")) {
           document.exitFullscreen().catch(() => {});
@@ -2660,38 +2869,20 @@
         const total = state.subjects.length;
         const priority = state.subjects.filter((s) => s.priority).length;
         const completed = state.subjects.filter((s) => s.isCompleted).length;
-        const totalNotes = state.subjects.reduce(
-          (a, s) =>
-            a +
-            s.notes.length +
-            (s.resources || []).filter((item) => item.type === "note").length,
-          0,
-        );
-        const totalResources = state.subjects.reduce(
-          (a, s) => a + (s.resources || []).length,
-          0,
-        );
-        const dueSoon = state.subjects.reduce(
-          (count, s) =>
-            count +
-            (!s.isCompleted &&
-            s.examDate &&
-            daysUntil(s.examDate) != null &&
-            daysUntil(s.examDate) <= 7 &&
-            daysUntil(s.examDate) >= 0
-              ? 1
-              : 0),
-          0,
-        );
+        const nextExam = getNextExamSubject();
+        const totalFocusMinutes = state.pomodoro.totalFocusMinutes || 0;
+        const prioritySubjects = getPrioritySubjects();
 
         const statsHtml = total
           ? `
     <div class="stats-bar">
       <div class="stat-card"><div class="stat-val">${total}</div><div class="stat-label">Subjects</div></div>
-      <div class="stat-card"><div class="stat-val">${totalNotes}</div><div class="stat-label">Notes</div></div>
-      <div class="stat-card"><div class="stat-val">${totalResources}</div><div class="stat-label">Resources</div></div>
-      <div class="stat-card"><div class="stat-val">${dueSoon}</div><div class="stat-label">Due Soon</div></div>
-      ${priority ? `<div class="stat-card"><div class="stat-val" style="color:var(--accent3)">${priority}</div><div class="stat-label">Priority</div></div>` : ""}
+      <div class="stat-card stat-card-action ${nextExam ? "" : "is-disabled"}" ${nextExam ? 'onclick="openNextExamSubject()"' : ""} role="${nextExam ? "button" : "presentation"}" tabindex="${nextExam ? "0" : "-1"}" ${nextExam ? 'onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();openNextExamSubject();}"' : ""}>
+        <div class="stat-val stat-val-text">${nextExam ? escHtml(nextExam.subject.name) : "None"}</div>
+        <div class="stat-label">${nextExam ? `${fmtDate(nextExam.subject.examDate)}${nextExam.days === 0 ? " • Today" : ` • ${nextExam.days}d`}` : "Next Exam"}</div>
+      </div>
+      <div class="stat-card"><div class="stat-val stat-val-text">${formatFocusMinutes(totalFocusMinutes)}</div><div class="stat-label">Total Focused Time</div></div>
+      ${priority ? `<div class="stat-card stat-card-action" onclick="openPrioritySubjectsModal()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPrioritySubjectsModal();}"><div class="stat-val" style="color:var(--accent3)">${prioritySubjects.length}</div><div class="stat-label">Priority</div></div>` : ""}
       ${completed ? `<div class="stat-card"><div class="stat-val" style="color:var(--green)">${completed}</div><div class="stat-label">Completed</div></div>` : ""}
     </div>`
           : "";
@@ -2714,7 +2905,11 @@
                   countdownEl = `<span class="countdown ${cls}">${label}</span>`;
                 }
                 return `
-          <div class="subject-card" style="--card-color:${s.color}" onclick="openSubject('${s.id}')">
+          <div class="subject-card" style="--card-color:${s.color}" draggable="true"
+               data-subject-id="${s.id}"
+               onclick="handleSubjectCardClick(event, '${s.id}')"
+               ondragstart="handleSubjectCardDragStart(event, '${s.id}')"
+               ondragend="handleSubjectCardDragEnd(event)">
             <div class="card-top">
               <div class="card-icon" style="background:${s.color}22">${s.emoji || "📘"}</div>
               <div style="display:flex;gap:5px;align-items:center;">
@@ -2756,7 +2951,10 @@
       </div>
     </div>
     ${statsHtml}
-    <div class="subjects-grid">${cardsHtml}</div>`;
+    <div class="subjects-grid" id="dashboard-subjects-grid"
+         ondragover="handleSubjectGridDragOver(event)"
+         ondrop="handleSubjectGridDrop(event)"
+         ondragleave="handleSubjectGridDragLeave(event)">${cardsHtml}</div>`;
         ensurePomodoroTicker();
       }
 
@@ -3299,6 +3497,15 @@
         openAddSubjectModal,
         openEditSubjectModal,
         deleteSubjectPrompt,
+        openNextExamSubject,
+        openPrioritySubjectsModal,
+        openPrioritySubject,
+        handleSubjectCardClick,
+        handleSubjectCardDragStart,
+        handleSubjectGridDragOver,
+        handleSubjectGridDragLeave,
+        handleSubjectGridDrop,
+        handleSubjectCardDragEnd,
         selSwatch,
         selectSubjectIcon,
         syncExamDateValue,
